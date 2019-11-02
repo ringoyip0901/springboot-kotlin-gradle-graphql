@@ -1,0 +1,25 @@
+type Query {
+    version: String!
+    message: String!
+}
+
+type Person {
+    id: String!,
+    name: String!
+    relationships(type: String): [Relationship]!
+}
+
+extend type Query {
+    getPersonById(id: ID!): Person
+    getPersonByName(name: String): Person
+}
+
+type Relationship {
+    from: Person!
+    to: Person!
+    relationship: String!
+}
+
+type Mutation {
+    createPerson(name: String!): Person!
+}
