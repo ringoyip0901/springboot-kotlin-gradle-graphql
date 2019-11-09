@@ -40,3 +40,8 @@ tasks.withType<KotlinCompile> {
 		jvmTarget = "1.8"
 	}
 }
+
+tasks.register<Copy>("copyReactApp") {
+	from ("client/build")
+	into("src/main/resources/static")
+}
