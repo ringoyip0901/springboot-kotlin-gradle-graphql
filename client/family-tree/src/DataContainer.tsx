@@ -6,6 +6,18 @@ const GET_ALL_PEOPLE = gql`
  {
    getAllPeople {
      id
+     cursor
+     name
+     image
+   }
+ }
+`
+
+const GET_MORE_PEOPLE = gql`
+ {
+   getAllPeople {
+     id
+     cursor
      name
      image
    }
@@ -31,7 +43,7 @@ const ADD_PERSON = gql`
 
 const DataContainer: React.FC = () => {
   const [variables, setVariables] = useState({ id: "pc" })
-  const [showTheFamily, { loading, error, data}] = useLazyQuery(GET_ALL_PEOPLE, {
+  const { loading, error, data: {cursor}, fetchMore} = useQuery(GET_ALL_PEOPLE, {
     pollInterval: 10000
   })
   const onChange = (e: any) => {
@@ -52,7 +64,15 @@ const DataContainer: React.FC = () => {
       {data && data.getAllPeople.map((person: any, i: number) =>
         <div key={i}><p key={i}>{person.name}</p><img src={person.image}/></div>
       )}
-      <button onClick={() => showTheFamily()}>Show The Family</button>
+      <button onClick={() =>
+        fetchMore({
+            query: GET_MORE_PEOPLE,
+            variables: { cursor: cursor}
+            updateQuery: (prevResult, {fetchMoreResult}) => {
+                const previous = prevResult
+            }
+        })}>Show The Family
+      </button>
 {/*        <p>{data ? data.getPersonById.name : "No data yet"}</p> */}
 {/*        <img src={data && data.getPersonById.image}></img> */}
       <CreateNewMember />
