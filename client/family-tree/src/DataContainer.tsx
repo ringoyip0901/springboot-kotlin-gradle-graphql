@@ -43,8 +43,8 @@ const ADD_PERSON = gql`
 
 const DataContainer: React.FC = () => {
   const [variables, setVariables] = useState({ id: "pc" })
-  const { loading, error, data: {cursor}, fetchMore} = useQuery(GET_ALL_PEOPLE, {
-    pollInterval: 10000
+  const { loading, error, data, fetchMore } = useQuery(GET_ALL_PEOPLE, {
+    pollInterval: 0
   })
   const onChange = (e: any) => {
     setVariables({
@@ -55,26 +55,33 @@ const DataContainer: React.FC = () => {
   if (error) return <div>Error...</div>
   return (
     <div>
-      <select style={{display: "none"}} onChange={onChange}>
+      <select style={{ display: "none" }} onChange={onChange}>
         <option value={"pc"}>Prince Charles</option>
         <option value={"pw"}>Prince William</option>
         <option value={"qeii"}>Queen Elizabeth</option>
         <option value={"pp"}>Prince Philip</option>
       </select>
       {data && data.getAllPeople.map((person: any, i: number) =>
-        <div key={i}><p key={i}>{person.name}</p><img src={person.image}/></div>
+        <div key={i}><p key={i}>{person.name}</p><img src={person.image} /></div>
       )}
       <button onClick={() =>
         fetchMore({
-            query: GET_MORE_PEOPLE,
-            variables: { cursor: cursor}
-            updateQuery: (prevResult, {fetchMoreResult}) => {
-                const previous = prevResult
+          query: GET_MORE_PEOPLE,
+          // variables: { cursor: data.cursor },
+          updateQuery: (prevResult, { fetchMoreResult }) => {
+            const previous = prevResult.getAllPeople;
+            const newResults = fetchMoreResult.getAllPeople;
+            const newCursor = fetchMoreResult.getAllPeople.cursor;
+            return {
+              cursor: newCursor,
+              getAllPeople: [...newResults],
+              __typename: previous.__typename
             }
-        })}>Show The Family
+          }
+        })}>Show More Family
       </button>
-{/*        <p>{data ? data.getPersonById.name : "No data yet"}</p> */}
-{/*        <img src={data && data.getPersonById.image}></img> */}
+      {/*        <p>{data ? data.getPersonById.name : "No data yet"}</p> */}
+      {/*        <img src={data && data.getPersonById.image}></img> */}
       <CreateNewMember />
     </div>
   )
