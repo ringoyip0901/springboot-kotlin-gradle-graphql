@@ -5,7 +5,8 @@ type Query {
 
 type Person {
     id: String!,
-    name: String!
+    name: String!,
+    image: String,
     relationships(type: String): [Relationship]!
 }
 
@@ -21,5 +22,5 @@ type Relationship {
 }
 
 type Mutation {
-    createPerson(name: String!): Person!
+    createPerson(name: String!, image: String!): Person!
 }
