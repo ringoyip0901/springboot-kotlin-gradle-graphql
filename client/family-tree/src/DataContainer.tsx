@@ -62,7 +62,6 @@ const DataContainer: React.FC = () => {
 
 const CreateNewMember: React.FC = () => {
   let image: any;
-  let id: any;
   let name: any;
   const [addPerson, { data }] = useMutation(ADD_PERSON);
   return (
