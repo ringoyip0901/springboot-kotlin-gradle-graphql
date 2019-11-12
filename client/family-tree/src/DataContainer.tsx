@@ -44,7 +44,7 @@ const ADD_PERSON = gql`
 const DataContainer: React.FC = () => {
   const [variables, setVariables] = useState({ id: "pc" })
   const { loading, error, data, fetchMore } = useQuery(GET_ALL_PEOPLE, {
-    pollInterval: 0
+    pollInterval: 3000
   })
   const onChange = (e: any) => {
     setVariables({
@@ -73,9 +73,7 @@ const DataContainer: React.FC = () => {
             const newResults = fetchMoreResult.getAllPeople;
             const newCursor = fetchMoreResult.getAllPeople.cursor;
             return {
-              cursor: newCursor,
               getAllPeople: [...newResults],
-              __typename: previous.__typename
             }
           }
         })}>Show More Family
