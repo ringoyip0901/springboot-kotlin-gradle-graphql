@@ -3,19 +3,8 @@ import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
 const GET_ALL_PEOPLE = gql`
- {
-   getAllPeople {
-     id
-     cursor
-     name
-     image
-   }
- }
-`
-
-const GET_MORE_PEOPLE = gql`
- {
-   getAllPeople {
+ query ($offset: Int!){
+   getAllPeople(offset: $offset) {
      id
      cursor
      name
@@ -44,7 +33,10 @@ const ADD_PERSON = gql`
 const DataContainer: React.FC = () => {
   const [variables, setVariables] = useState({ id: "pc" })
   const { loading, error, data, fetchMore } = useQuery(GET_ALL_PEOPLE, {
-    pollInterval: 3000
+    pollInterval: 0,
+    variables: {
+        offset: 0,
+    }
   })
   const onChange = (e: any) => {
     setVariables({
@@ -66,20 +58,20 @@ const DataContainer: React.FC = () => {
       )}
       <button onClick={() =>
         fetchMore({
-          query: GET_MORE_PEOPLE,
-          // variables: { cursor: data.cursor },
+          query: GET_ALL_PEOPLE,
+          variables: {
+            offset: data.getAllPeople.length,
+          },
           updateQuery: (prevResult, { fetchMoreResult }) => {
             const previous = prevResult.getAllPeople;
             const newResults = fetchMoreResult.getAllPeople;
             const newCursor = fetchMoreResult.getAllPeople.cursor;
             return {
-              getAllPeople: [...newResults],
+              getAllPeople: [...previous, ...newResults],
             }
           }
         })}>Show More Family
       </button>
-      {/*        <p>{data ? data.getPersonById.name : "No data yet"}</p> */}
-      {/*        <img src={data && data.getPersonById.image}></img> */}
       <CreateNewMember />
     </div>
   )
