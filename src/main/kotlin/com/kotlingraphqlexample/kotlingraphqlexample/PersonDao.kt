@@ -19,7 +19,8 @@ class PersonDao {
         data.add(person)
         return data
     }
-    fun getAllPeople(): List<Person> {
-        return data
+    fun getAllPeople(offset: Int): List<Person> {
+        val range = IntRange(start = offset, endInclusive = data.size - 1);
+        return data.slice(range)
     }
 }

@@ -14,7 +14,7 @@ type Person {
 extend type Query {
     getPersonById(id: ID!): Person
     getPersonByName(name: String): Person
-    getAllPeople: [Person]!
+    getAllPeople(offset: Int!): [Person]!
 }
 
 type Relationship {

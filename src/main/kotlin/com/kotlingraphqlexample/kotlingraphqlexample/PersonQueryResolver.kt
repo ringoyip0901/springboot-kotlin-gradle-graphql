@@ -8,5 +8,5 @@ import org.springframework.stereotype.Component
 class PersonQueryResolver (private val personDao: PersonDao): GraphQLQueryResolver {
     fun getPersonById(id: String) = personDao.getPersonById(id)
     fun getPersonByName(name: String) = personDao.getPersonByName(name)
-    fun getAllPeople() = personDao.getAllPeople()
+    fun getAllPeople(offset: Int) = personDao.getAllPeople(offset)
 }
