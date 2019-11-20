@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import CreateNewMember from './CreateNewMember'
 
 const GET_ALL_PEOPLE = gql`
  query ($offset: Int!){
@@ -21,19 +22,11 @@ const GET_NAMES = gql`
     }
   }
 `
-const ADD_PERSON = gql`
-  mutation ($name: String!, $image: String) {
-    createPerson(name: $name, image: $image) {
-      name
-      image
-    }
-  }
-`
 
 const DataContainer: React.FC = () => {
   const [variables, setVariables] = useState({ id: "pc" })
   const { loading, error, data, fetchMore } = useQuery(GET_ALL_PEOPLE, {
-    pollInterval: 0,
+    pollInterval: 5000,
     variables: {
         offset: 0,
     }
@@ -60,12 +53,14 @@ const DataContainer: React.FC = () => {
         fetchMore({
           query: GET_ALL_PEOPLE,
           variables: {
-            offset: data.getAllPeople.length,
+            offset: data.getAllPeople.length, //this value is the position of the array that fetchMore should start fetching from
           },
           updateQuery: (prevResult, { fetchMoreResult }) => {
             const previous = prevResult.getAllPeople;
             const newResults = fetchMoreResult.getAllPeople;
             const newCursor = fetchMoreResult.getAllPeople.cursor;
+            console.log("Previous Results: " + previous);
+            console.log("New Result: " + newResults)
             return {
               getAllPeople: [...previous, ...newResults],
             }
@@ -77,34 +72,5 @@ const DataContainer: React.FC = () => {
   )
 }
 
-const CreateNewMember: React.FC = () => {
-  let image: any;
-  let name: any;
-  const [addPerson, { data }] = useMutation(ADD_PERSON);
-  return (
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-        addPerson({ variables: { name: name.value, image: image.value } });
-        name.value = "";
-        image.value = "";
-      }}
-    >
-      <input
-        placeholder="Name"
-        ref={node => {
-          name = node;
-        }}
-      />
-      <input
-        placeholder="image"
-        ref={node => {
-          image = node;
-        }}
-      />
-      <button type="submit">Add Person</button>
-    </form>
-  )
-}
 
 export default DataContainer;
