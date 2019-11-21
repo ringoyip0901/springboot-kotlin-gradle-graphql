@@ -3,15 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "babel-plugin-macros": "^2.7.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.2.0"
+    "react-relay": "^7.1.0",
+    "react-scripts": "3.2.0",
+    "relay-runtime": "^7.1.0",
+    "typescript": "^3.7.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "relay": "relay-compiler --src ./src --schema ../../src/main/resources/graphql/familytree.graphqls"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -27,5 +32,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-plugin-relay": "^7.1.0",
+    "graphql": "^14.5.8",
+    "relay-compiler": "^7.1.0",
+    "relay-config": "^7.1.0"
   }
 }

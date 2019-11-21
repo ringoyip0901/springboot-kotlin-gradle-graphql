@@ -25,19 +25,19 @@ const GET_NAMES = gql`
 
 const DataContainer: React.FC = () => {
   const [variables, setVariables] = useState({ id: "pc" })
-//   const { loading, error, data, fetchMore } = useQuery(GET_ALL_PEOPLE, {
-//     pollInterval: 0,
-//     variables: {
-//         offset: 0,
-//
-//     }
-//   })
-  const [callQuery, { loading, error, fetchMore, data: {cursor}] = useLazyQuery(GET_ALL_PEOPLE, {
+  const { loading, error, data, fetchMore } = useQuery(GET_ALL_PEOPLE, {
     pollInterval: 0,
     variables: {
         offset: 0,
+
     }
   })
+//   const [callQuery, { loading, error, fetchMore, data: {cursor}] = useLazyQuery(GET_ALL_PEOPLE, {
+//     pollInterval: 0,
+//     variables: {
+//         offset: 0,
+//     }
+//   })
   const onChange = (e: any) => {
     setVariables({
       id: e.target.value
@@ -56,7 +56,7 @@ const DataContainer: React.FC = () => {
       {data && data.getAllPeople.map((person: any, i: number) =>
         <div key={i}><p key={i}>{person.name}</p><img src={person.image} /></div>
       )}
-      <button onClick={() => callQuery()}>START</button>
+{/*       <button onClick={() => callQuery()}>START</button> */}
       <button onClick={() =>
         fetchMore({
           query: GET_ALL_PEOPLE,
