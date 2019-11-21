@@ -1,9 +1,14 @@
 type Query {
     version: String!
     message: String!
+    relayId: ID
+    getPersonById(id: ID!): Person
+    getPersonByName(name: String): Person
+    getAllPeople(offset: Int!): [Person]!
 }
 
 type Person {
+#    strangeID: ID,
     id: String!,
     cursor: String!,
     name: String!,
@@ -11,18 +16,20 @@ type Person {
     relationships(type: String): [Relationship]!
 }
 
-extend type Query {
-    getPersonById(id: ID!): Person
-    getPersonByName(name: String): Person
-    getAllPeople(offset: Int!): [Person]!
-}
+#extend type Query {
+#    getPersonById(id: ID!): Person
+#    getPersonByName(name: String): Person
+#    getAllPeople(offset: Int!): [Person]!
+#}
 
 type Relationship {
+#    strangeID: ID,
     from: Person!
     to: Person!
     relationship: String!
 }
 
 type Mutation {
+#    strangeID: ID,
     createPerson(name: String, image: String): [Person]!
 }

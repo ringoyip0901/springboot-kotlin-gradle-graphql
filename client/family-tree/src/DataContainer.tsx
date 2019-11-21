@@ -26,11 +26,18 @@ const GET_NAMES = gql`
 const DataContainer: React.FC = () => {
   const [variables, setVariables] = useState({ id: "pc" })
   const { loading, error, data, fetchMore } = useQuery(GET_ALL_PEOPLE, {
-    pollInterval: 5000,
+    pollInterval: 0,
     variables: {
         offset: 0,
+
     }
   })
+//   const [callQuery, { loading, error, fetchMore, data: {cursor}] = useLazyQuery(GET_ALL_PEOPLE, {
+//     pollInterval: 0,
+//     variables: {
+//         offset: 0,
+//     }
+//   })
   const onChange = (e: any) => {
     setVariables({
       id: e.target.value
@@ -49,18 +56,20 @@ const DataContainer: React.FC = () => {
       {data && data.getAllPeople.map((person: any, i: number) =>
         <div key={i}><p key={i}>{person.name}</p><img src={person.image} /></div>
       )}
+{/*       <button onClick={() => callQuery()}>START</button> */}
       <button onClick={() =>
         fetchMore({
           query: GET_ALL_PEOPLE,
           variables: {
-            offset: data.getAllPeople.length, //this value is the position of the array that fetchMore should start fetching from
+            //offset: data.getAllPeople.length, //this value is the position of the array that fetchMore should start fetching from
+            cursor
           },
           updateQuery: (prevResult, { fetchMoreResult }) => {
             const previous = prevResult.getAllPeople;
             const newResults = fetchMoreResult.getAllPeople;
             const newCursor = fetchMoreResult.getAllPeople.cursor;
-            console.log("Previous Results: " + previous);
-            console.log("New Result: " + newResults)
+            console.log("Previous Results: ", previous);
+            console.log("New Result: ", newResults)
             return {
               getAllPeople: [...previous, ...newResults],
             }
