@@ -7,19 +7,23 @@ import {
 
 function fetchQuery(
   operation,
-  variables,
 ) {
   return fetch('http://localhost:8080/graphql', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'content-type': 'application/json',
     },
     body: JSON.stringify({
       query: operation.text,
-      variables,
     }),
   }).then(response => {
     return response.json();
+  }).then(response => {
+    console.log("response: ", response)
+    return response
+    // return {"data": {
+    //   "version": 3,
+    //   "getAllPeople": [{id: "2", name: "grrr", "wassup": "holler"}]}}
   })
 }
 

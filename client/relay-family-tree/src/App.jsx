@@ -1,6 +1,8 @@
 import React from 'react';
 import {QueryRenderer} from 'react-relay';
-import DataContainer from './DataContainer.jsx'
+import PersonNameContainer from './PersonNameContainer.jsx'
+import PersonImageContainer from './PersonImageContainer.jsx'
+import VersionContainer from './VersionContainer'
 import environment from './relayEnvir.js'
 import logo from './logo.svg';
 import './App.css';
@@ -12,35 +14,31 @@ function App() {
         environment={environment}
         query={graphql`
             query AppQuery {
-                ...DataContainer_people
+              version {
+                ...VersionContainer_version,
+              }
+              getPersonByName(name: "Prince William") {
+                ...PersonNameContainer_getPersonByName,
+                ...PersonImageContainer_getPersonByName
+              }
             }
         `
         }
-        variables={{
-            offset: 0
-        }}
-        render={(stuff) => {
-            console.log(stuff)
-            return (
-                <div className="App">
-                  <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <p>
-                      Edit <code>src/App.js</code> and save to reload.
-                    </p>
-                    <a
-                      className="App-link"
-                      href="https://reactjs.org"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Learn React
-                    </a>
-                  </header>
-                  <DataContainer people={null}/>
-                 </div>
-             )
-        }}
+        render={({error, props}) => {
+          if (error) {
+            console.log("first error: ", error);
+            return <div>There was an error yo: {error.message}, {JSON.stringify(error)}</div>
+          } else if (props) {
+            console.log("top props: ", props)
+        
+            return <>
+              <VersionContainer version={props.version}/>
+              <PersonNameContainer getPersonByName={props.getPersonByName}/>
+              <PersonImageContainer getPersonByName={props.getPersonByName}/>
+              </>
+        } else {
+          return <div>Loading...</div>
+        }}}
       />
   );
 }

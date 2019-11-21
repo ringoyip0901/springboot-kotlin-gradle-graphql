@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 33a6d54d0efd38ed85dd1ca1e8d7df3e
+ * @relayHash 233547945246c0cba099688f7c400a04
  */
 
 /* eslint-disable */
@@ -9,10 +9,17 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-type DataContainer_people$ref = any;
+type PersonImageContainer_getPersonByName$ref = any;
+type PersonNameContainer_getPersonByName$ref = any;
+type VersionContainer_version$ref = any;
 export type AppQueryVariables = {||};
 export type AppQueryResponse = {|
-  +$fragmentRefs: DataContainer_people$ref
+  +version: ?{|
+    +$fragmentRefs: VersionContainer_version$ref
+  |},
+  +getPersonByName: ?{|
+    +$fragmentRefs: PersonNameContainer_getPersonByName$ref & PersonImageContainer_getPersonByName$ref
+  |},
 |};
 export type AppQuery = {|
   variables: AppQueryVariables,
@@ -23,18 +30,38 @@ export type AppQuery = {|
 
 /*
 query AppQuery {
-  ...DataContainer_people
+  version {
+    ...VersionContainer_version
+  }
+  getPersonByName(name: "Prince William") {
+    ...PersonNameContainer_getPersonByName
+    ...PersonImageContainer_getPersonByName
+  }
 }
 
-fragment DataContainer_people on Query {
-  getAllPeople(offset: 0) {
-    name
-    id
-  }
+fragment PersonImageContainer_getPersonByName on Person {
+  image
+}
+
+fragment PersonNameContainer_getPersonByName on Person {
+  name
+}
+
+fragment VersionContainer_version on Version {
+  previous
+  current
 }
 */
 
-const node/*: ConcreteRequest*/ = {
+const node/*: ConcreteRequest*/ = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "name",
+    "value": "Prince William"
+  }
+];
+return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
@@ -44,9 +71,41 @@ const node/*: ConcreteRequest*/ = {
     "argumentDefinitions": [],
     "selections": [
       {
-        "kind": "FragmentSpread",
-        "name": "DataContainer_people",
-        "args": null
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "version",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "Version",
+        "plural": false,
+        "selections": [
+          {
+            "kind": "FragmentSpread",
+            "name": "VersionContainer_version",
+            "args": null
+          }
+        ]
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "getPersonByName",
+        "storageKey": "getPersonByName(name:\"Prince William\")",
+        "args": (v0/*: any*/),
+        "concreteType": "Person",
+        "plural": false,
+        "selections": [
+          {
+            "kind": "FragmentSpread",
+            "name": "PersonNameContainer_getPersonByName",
+            "args": null
+          },
+          {
+            "kind": "FragmentSpread",
+            "name": "PersonImageContainer_getPersonByName",
+            "args": null
+          }
+        ]
       }
     ]
   },
@@ -58,17 +117,36 @@ const node/*: ConcreteRequest*/ = {
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "getAllPeople",
-        "storageKey": "getAllPeople(offset:0)",
-        "args": [
+        "name": "version",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "Version",
+        "plural": false,
+        "selections": [
           {
-            "kind": "Literal",
-            "name": "offset",
-            "value": 0
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "previous",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "current",
+            "args": null,
+            "storageKey": null
           }
-        ],
+        ]
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "getPersonByName",
+        "storageKey": "getPersonByName(name:\"Prince William\")",
+        "args": (v0/*: any*/),
         "concreteType": "Person",
-        "plural": true,
+        "plural": false,
         "selections": [
           {
             "kind": "ScalarField",
@@ -80,7 +158,7 @@ const node/*: ConcreteRequest*/ = {
           {
             "kind": "ScalarField",
             "alias": null,
-            "name": "id",
+            "name": "image",
             "args": null,
             "storageKey": null
           }
@@ -92,10 +170,11 @@ const node/*: ConcreteRequest*/ = {
     "operationKind": "query",
     "name": "AppQuery",
     "id": null,
-    "text": "query AppQuery {\n  ...DataContainer_people\n}\n\nfragment DataContainer_people on Query {\n  getAllPeople(offset: 0) {\n    name\n    id\n  }\n}\n",
+    "text": "query AppQuery {\n  version {\n    ...VersionContainer_version\n  }\n  getPersonByName(name: \"Prince William\") {\n    ...PersonNameContainer_getPersonByName\n    ...PersonImageContainer_getPersonByName\n  }\n}\n\nfragment PersonImageContainer_getPersonByName on Person {\n  image\n}\n\nfragment PersonNameContainer_getPersonByName on Person {\n  name\n}\n\nfragment VersionContainer_version on Version {\n  previous\n  current\n}\n",
     "metadata": {}
   }
 };
+})();
 // prettier-ignore
-(node/*: any*/).hash = '9ffd5e1ec054a2a9e37f0f26319c1b03';
+(node/*: any*/).hash = 'dc71b482786a67710f758da3485ec70a';
 module.exports = node;

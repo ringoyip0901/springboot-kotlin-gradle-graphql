@@ -34,6 +34,16 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.6.3",
+    "@babel/node": "^7.6.3",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.6.3",
+    "@babel/runtime": "^7.6.3",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.5",
     "babel-plugin-relay": "^7.1.0",
     "graphql": "^14.5.8",
     "relay-compiler": "^7.1.0",

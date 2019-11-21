@@ -1,10 +1,15 @@
 type Query {
-    version: String!
+    version: Version
     message: String!
     relayId: ID
     getPersonById(id: ID!): Person
     getPersonByName(name: String): Person
     getAllPeople(offset: Int!): [Person]!
+}
+
+type Version {
+    current: String
+    previous: String
 }
 
 type Person {
