@@ -32,14 +32,27 @@ const node/*: ReaderFragment*/ = {
   "name": "ListOfPeople_list",
   "type": "AllPeople",
   "metadata": null,
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "kind": "LocalArgument",
+      "name": "name",
+      "type": "String",
+      "defaultValue": null
+    }
+  ],
   "selections": [
     {
       "kind": "LinkedField",
       "alias": null,
       "name": "people",
       "storageKey": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "name",
+          "variableName": "name"
+        }
+      ],
       "concreteType": "Person",
       "plural": true,
       "selections": [
@@ -69,5 +82,5 @@ const node/*: ReaderFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '4c5105c60dcb6226c1f47f18af3c7c47';
+(node/*: any*/).hash = 'b6336db55e3bdd50bfc0ae73e4a6b49c';
 module.exports = node;

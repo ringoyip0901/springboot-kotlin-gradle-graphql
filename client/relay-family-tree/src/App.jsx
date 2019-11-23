@@ -8,13 +8,14 @@ import environment from './relayEnvir.js'
 import logo from './logo.svg';
 import './App.css';
 import graphql from 'babel-plugin-relay/macro'
+import ListOfPeoplePagination from '../ListOfPeoplePagination.js';
 
 function App() {
   return (
       <QueryRenderer
         environment={environment}
         query={graphql`
-            query AppQuery {
+            query AppQuery ($offset: Int!, $name: String) {
               version {
                 ...VersionContainer_version,
               }
@@ -22,12 +23,16 @@ function App() {
                 ...PersonNameContainer_getPersonByName,
                 ...PersonImageContainer_getPersonByName
               }
-              getEveryone(offset: 0) {
-                ...ListOfPeople_list
+              getEveryone(offset: $offset) {
+                ...ListOfPeople_list @arguments(name: $name)
               }
             }
         `
         }
+        variables={{
+          offset: 0,
+          name: "Prince William"
+        }}
         render={({error, props}) => {
           if (error) {
             return <div>There was an error yo: {error.message}, {JSON.stringify(error)}</div>
@@ -35,6 +40,7 @@ function App() {
             return <>
               {/* <VersionContainer version={props.version}/> */}
               <ListOfPeople list={props.getEveryone}/>
+              <ListOfPeoplePagination />
               {/* <PersonNameContainer getPersonByName={props.getPersonByName}/>
               <PersonImageContainer getPersonByName={props.getPersonByName}/> */}
               </>

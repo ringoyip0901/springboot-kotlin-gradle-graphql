@@ -4,8 +4,8 @@ type Query {
     relayId: ID
     getPersonById(id: ID!): Person
     getPersonByName(name: String): Person
-    getAllPeople(offset: Int!): [Person] 
-    getEveryone(offset: Int!): AllPeople
+    getAllPeople(offset: Int): [Person] 
+    getEveryone(offset: Int): AllPeople
 }
 
 type Version {
@@ -14,7 +14,19 @@ type Version {
 }
 
 type AllPeople {
-    people: [Person]!
+    pageInfo: PageInfo
+    edges: [Edge<Person>]
+    people(name: String, image: String): [Person]!   
+}
+
+type PageInfo {
+    hasNextPage: Boolean
+    endCursor: String
+}
+
+type Edge<Payload> {
+    cursor: String
+    node: Payload
 }
 
 type Person {
