@@ -5,7 +5,13 @@ type Query {
     getPersonById(id: ID!): Person
     getPersonByName(name: String): Person
     getAllPeople(offset: Int!): [Person]!
+    getEveryone: Everyone
 }
+
+type Everyone {
+    getAllPeople(offset: Int! = 0): [Person]!
+}
+
 
 type Version {
     current: String

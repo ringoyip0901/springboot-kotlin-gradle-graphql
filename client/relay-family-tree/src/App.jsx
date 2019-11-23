@@ -21,6 +21,9 @@ function App() {
                 ...PersonNameContainer_getPersonByName,
                 ...PersonImageContainer_getPersonByName
               }
+              getEveryone {
+                ...PeopleContainer_list
+              }
             }
         `
         }
@@ -30,7 +33,6 @@ function App() {
             return <div>There was an error yo: {error.message}, {JSON.stringify(error)}</div>
           } else if (props) {
             console.log("top props: ", props)
-        
             return <>
               <VersionContainer version={props.version}/>
               <PersonNameContainer getPersonByName={props.getPersonByName}/>

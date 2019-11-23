@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 233547945246c0cba099688f7c400a04
+ * @relayHash 61f8e12ae7fee5f1670a59676d89b3fe
  */
 
 /* eslint-disable */
@@ -9,6 +9,7 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
+type PeopleContainer_list$ref = any;
 type PersonImageContainer_getPersonByName$ref = any;
 type PersonNameContainer_getPersonByName$ref = any;
 type VersionContainer_version$ref = any;
@@ -19,6 +20,9 @@ export type AppQueryResponse = {|
   |},
   +getPersonByName: ?{|
     +$fragmentRefs: PersonNameContainer_getPersonByName$ref & PersonImageContainer_getPersonByName$ref
+  |},
+  +getEveryone: ?{|
+    +$fragmentRefs: PeopleContainer_list$ref
   |},
 |};
 export type AppQuery = {|
@@ -36,6 +40,16 @@ query AppQuery {
   getPersonByName(name: "Prince William") {
     ...PersonNameContainer_getPersonByName
     ...PersonImageContainer_getPersonByName
+  }
+  getEveryone {
+    ...PeopleContainer_list
+  }
+}
+
+fragment PeopleContainer_list on Everyone {
+  list {
+    name
+    image
   }
 }
 
@@ -59,6 +73,22 @@ var v0 = [
     "kind": "Literal",
     "name": "name",
     "value": "Prince William"
+  }
+],
+v1 = [
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "name",
+    "args": null,
+    "storageKey": null
+  },
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "image",
+    "args": null,
+    "storageKey": null
   }
 ];
 return {
@@ -106,6 +136,22 @@ return {
             "args": null
           }
         ]
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "getEveryone",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "Everyone",
+        "plural": false,
+        "selections": [
+          {
+            "kind": "FragmentSpread",
+            "name": "PeopleContainer_list",
+            "args": null
+          }
+        ]
       }
     ]
   },
@@ -147,20 +193,26 @@ return {
         "args": (v0/*: any*/),
         "concreteType": "Person",
         "plural": false,
+        "selections": (v1/*: any*/)
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "getEveryone",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "Everyone",
+        "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
+            "kind": "LinkedField",
             "alias": null,
-            "name": "name",
+            "name": "list",
+            "storageKey": null,
             "args": null,
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "name": "image",
-            "args": null,
-            "storageKey": null
+            "concreteType": "Person",
+            "plural": true,
+            "selections": (v1/*: any*/)
           }
         ]
       }
@@ -170,11 +222,11 @@ return {
     "operationKind": "query",
     "name": "AppQuery",
     "id": null,
-    "text": "query AppQuery {\n  version {\n    ...VersionContainer_version\n  }\n  getPersonByName(name: \"Prince William\") {\n    ...PersonNameContainer_getPersonByName\n    ...PersonImageContainer_getPersonByName\n  }\n}\n\nfragment PersonImageContainer_getPersonByName on Person {\n  image\n}\n\nfragment PersonNameContainer_getPersonByName on Person {\n  name\n}\n\nfragment VersionContainer_version on Version {\n  previous\n  current\n}\n",
+    "text": "query AppQuery {\n  version {\n    ...VersionContainer_version\n  }\n  getPersonByName(name: \"Prince William\") {\n    ...PersonNameContainer_getPersonByName\n    ...PersonImageContainer_getPersonByName\n  }\n  getEveryone {\n    ...PeopleContainer_list\n  }\n}\n\nfragment PeopleContainer_list on Everyone {\n  list {\n    name\n    image\n  }\n}\n\nfragment PersonImageContainer_getPersonByName on Person {\n  image\n}\n\nfragment PersonNameContainer_getPersonByName on Person {\n  name\n}\n\nfragment VersionContainer_version on Version {\n  previous\n  current\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'dc71b482786a67710f758da3485ec70a';
+(node/*: any*/).hash = 'a97b87c03867b9fbbc725e6bd4c62820';
 module.exports = node;
