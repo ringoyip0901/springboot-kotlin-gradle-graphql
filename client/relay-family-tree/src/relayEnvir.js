@@ -7,6 +7,7 @@ import {
 
 function fetchQuery(
   operation,
+  variables
 ) {
   return fetch('http://localhost:8080/graphql', {
     method: 'POST',
@@ -15,6 +16,7 @@ function fetchQuery(
     },
     body: JSON.stringify({
       query: operation.text,
+      variables
     }),
   }).then(response => {
     return response.json();

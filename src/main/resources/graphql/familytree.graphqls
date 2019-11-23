@@ -4,7 +4,8 @@ type Query {
     relayId: ID
     getPersonById(id: ID!): Person
     getPersonByName(name: String): Person
-    getAllPeople(offset: Int!): [Person]!
+    getAllPeople(offset: Int): [Person] 
+    getEveryone(offset: Int): AllPeople
 }
 
 type Version {
@@ -12,8 +13,23 @@ type Version {
     previous: String
 }
 
+type AllPeople {
+    pageInfo: PageInfo
+    edges: [Edge<Person>]
+    people(name: String, image: String): [Person]!   
+}
+
+type PageInfo {
+    hasNextPage: Boolean
+    endCursor: String
+}
+
+type Edge<Payload> {
+    cursor: String
+    node: Payload
+}
+
 type Person {
-#    strangeID: ID,
     id: String!,
     cursor: String!,
     name: String!,
@@ -28,13 +44,11 @@ type Person {
 #}
 
 type Relationship {
-#    strangeID: ID,
     from: Person!
     to: Person!
     relationship: String!
 }
 
 type Mutation {
-#    strangeID: ID,
     createPerson(name: String, image: String): [Person]!
 }
