@@ -19,7 +19,13 @@ export type ListOfPeoplePagination_paginatedList = {|
         +name: string,
         +image: ?string,
       |},
-    |}>
+    |}>,
+    +pageInfo: ?{|
+      +hasNextPage: ?boolean,
+      +hasPreviousPage: ?boolean,
+      +startCursor: ?string,
+      +endCursor: ?string,
+    |},
   |},
   +$refType: ListOfPeoplePagination_paginatedList$ref,
 |};
@@ -39,7 +45,7 @@ const node/*: ReaderFragment*/ = {
     "connection": [
       {
         "count": "count",
-        "cursor": null,
+        "cursor": "cursor",
         "direction": "forward",
         "path": [
           "allPeople"
@@ -67,13 +73,7 @@ const node/*: ReaderFragment*/ = {
       "alias": "allPeople",
       "name": "__ListOfPeoplePagination_allPeople_connection",
       "storageKey": null,
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "cursor",
-          "variableName": "cursor"
-        }
-      ],
+      "args": null,
       "concreteType": "Edges",
       "plural": false,
       "selections": [
@@ -139,14 +139,28 @@ const node/*: ReaderFragment*/ = {
             {
               "kind": "ScalarField",
               "alias": null,
-              "name": "endCursor",
+              "name": "hasNextPage",
               "args": null,
               "storageKey": null
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "name": "hasNextPage",
+              "name": "hasPreviousPage",
+              "args": null,
+              "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "startCursor",
+              "args": null,
+              "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "endCursor",
               "args": null,
               "storageKey": null
             }
@@ -157,5 +171,5 @@ const node/*: ReaderFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = 'd082a8ec4023596c6c0e8771d3a3a255';
+(node/*: any*/).hash = '2b07bfc640fba6ba862e7f4ce7ecff6a';
 module.exports = node;

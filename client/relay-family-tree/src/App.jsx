@@ -11,19 +11,16 @@ import graphql from 'babel-plugin-relay/macro';
 import ListOfPeoplePagination from './ListOfPeoplePagination.jsx';
 
 //                  ...ListOfPeople_list @arguments(name: $name)
+//               getPersonByName(name: "Prince William") {
+//                 ...PersonNameContainer_getPersonByName,
+//                 ...PersonImageContainer_getPersonByName
+//               }
 function App () {
   return (
     <QueryRenderer
       environment={environment}
       query={graphql`
             query AppQuery ($offset: Int!, $count: Int, $cursor: String) {
-              version {
-                ...VersionContainer_version,
-              }
-              getPersonByName(name: "Prince William") {
-                ...PersonNameContainer_getPersonByName,
-                ...PersonImageContainer_getPersonByName
-              }
               getEveryone(offset: $offset) {
                 ...ListOfPeoplePagination_paginatedList @arguments(count: $count, cursor: $cursor)
               }
@@ -31,9 +28,8 @@ function App () {
         `}
       variables={{
         offset: 0,
-//         name: 'Prince William',
-        count: 2,
-        cursor: "3"
+        count: 1,
+        cursor: "2"
       }}
       render={({error, props}) => {
         if (error) {

@@ -16,7 +16,7 @@ type Version {
 
 type AllPeople {
     people(name: String, image: String, count: Int, cursor: String): [Person]!
-    allPeople(name: String, image: String, first: Int, cursor: String): Edges
+    allPeople(name: String, image: String, first: Int, after: String): Edges
 }
 
 type Edges {

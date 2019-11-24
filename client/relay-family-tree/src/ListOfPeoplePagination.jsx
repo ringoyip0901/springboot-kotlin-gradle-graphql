@@ -3,11 +3,9 @@ import {createPaginationContainer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 
 const ListOfPeoplePagination = ({ paginatedList, relay }) => {
-
   const loadMore = () => {
-    let hasMore =  relay.hasMore
-    console.log(hasMore());
-    return;
+    let hasMore = relay.hasMore
+    return relay.loadMore(2);;
   }
   return (
     <React.Fragment>
@@ -28,7 +26,7 @@ export default createPaginationContainer (
             fragment ListOfPeoplePagination_paginatedList on AllPeople @argumentDefinitions(count: { type: "Int" }, cursor: { type: "String" }) {
                 allPeople (
                     first: $count,
-                    cursor: $cursor
+                    after: $cursor,
                     ) @connection(key: "ListOfPeoplePagination_allPeople") {
                     edges {
                         cursor
@@ -37,22 +35,34 @@ export default createPaginationContainer (
                           image
                         }
                     }
+                    pageInfo {
+                        hasNextPage
+                        hasPreviousPage
+                        startCursor
+                        endCursor
+                    }
                 }
               }
         `,
   },
   {
     direction: 'forward',
+    getConnectionFromProps(props) {
+      return props.paginatedList
+    },
     getFragmentVariables (prevVars, totalCount) {
+      console.log("previous variables: ", prevVars);
+      console.log("totalCount ", totalCount)
       return {
         ...prevVars,
         count: totalCount,
       };
     },
     getVariables (props, {count, cursor}, fragmentVariables) {
+      console.log(fragmentVariables)
       return {
         count,
-        cursor,
+        after: cursor,
       };
     },
     query: graphql`

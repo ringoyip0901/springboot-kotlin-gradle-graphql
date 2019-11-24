@@ -24,7 +24,7 @@ class PersonQueryResolver(private val personDao: PersonDao) : GraphQLQueryResolv
     fun getPersonById(id: String) = personDao.getPersonById(id)
     fun getPersonByName(name: String) = personDao.getPersonByName(name)
     fun getAllPeople(offset: Int) = personDao.getAllPeople(offset)
-    fun getEveryone(offset: Int?): AllPeople = AllPeople(personDao.getAllPeople(offset), personDao.getAllPeople(offset))
+    fun getEveryone(offset: Int?): AllPeople = AllPeople(personDao.getAllPeople(offset), edges)
 }
 
 @Component
@@ -37,12 +37,12 @@ class AllPeopleQueryResolver(private val personDao: PersonDao) : GraphQLResolver
         return counted
     }
 
-    fun allPeople(allPeople: AllPeople, name: String?, image: String?, first: Int?, cursor: String?): Edges {
-        fun getPersonById(id: String) = personDao.getPersonById(id)
-        val filteredByName: List<Person> = if (name != null) allPeople.people.filter { it.name == name } else allPeople.people
-        val filteredByImage: List<Person> = if (image != null) filteredByName.filter { it.image == image } else filteredByName
-        val sortedById: List<Person> = if (cursor != null) filteredByImage.filter { Integer.parseInt(it.id) < Integer.parseInt(cursor) }.sortedBy { it.id } else filteredByImage
-        val counted: List<Person> = sortedById.subList(0, first ?: sortedById.size - 1)
+    fun allPeople(allPeople: AllPeople, name: String?, image: String?, first: Int?, after: String?): Edges {
+//        fun getPersonById(id: String) = personDao.getPersonById(id)
+//        val filteredByName: List<Person> = if (name != null) allPeople.people.filter { it.name == name } else allPeople.people
+//        val filteredByImage: List<Person> = if (image != null) filteredByName.filter { it.image == image } else filteredByName
+//        val sortedById: List<Person> = if (cursor != null) filteredByImage.filter { Integer.parseInt(it.id) < Integer.parseInt(cursor) }.sortedBy { it.id } else filteredByImage
+//        val counted: List<Person> = sortedById.subList(0, first ?: sortedById.size - 1)
         return edges
     }
 }

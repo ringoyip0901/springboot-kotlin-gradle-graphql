@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 1730fefdb8524f318af4030ac7062f06
+ * @relayHash a371e2eb79c24c2e2a211a14a43334ab
  */
 
 /* eslint-disable */
@@ -37,7 +37,7 @@ query ListOfPeoplePaginationQuery(
 }
 
 fragment ListOfPeoplePagination_paginatedList_1G22uz on AllPeople {
-  allPeople(first: $count, cursor: $cursor) {
+  allPeople(first: $count, after: $cursor) {
     edges {
       cursor
       node {
@@ -47,8 +47,10 @@ fragment ListOfPeoplePagination_paginatedList_1G22uz on AllPeople {
       }
     }
     pageInfo {
-      endCursor
       hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
     }
   }
 }
@@ -76,13 +78,12 @@ v1 = [
     "value": 0
   }
 ],
-v2 = {
-  "kind": "Variable",
-  "name": "cursor",
-  "variableName": "cursor"
-},
-v3 = [
-  (v2/*: any*/),
+v2 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "cursor"
+  },
   {
     "kind": "Variable",
     "name": "first",
@@ -116,7 +117,11 @@ return {
                 "name": "count",
                 "variableName": "count"
               },
-              (v2/*: any*/)
+              {
+                "kind": "Variable",
+                "name": "cursor",
+                "variableName": "cursor"
+              }
             ]
           }
         ]
@@ -142,7 +147,7 @@ return {
             "alias": null,
             "name": "allPeople",
             "storageKey": null,
-            "args": (v3/*: any*/),
+            "args": (v2/*: any*/),
             "concreteType": "Edges",
             "plural": false,
             "selections": [
@@ -208,14 +213,28 @@ return {
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "name": "endCursor",
+                    "name": "hasNextPage",
                     "args": null,
                     "storageKey": null
                   },
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "name": "hasNextPage",
+                    "name": "hasPreviousPage",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "startCursor",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "endCursor",
                     "args": null,
                     "storageKey": null
                   }
@@ -227,12 +246,10 @@ return {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "allPeople",
-            "args": (v3/*: any*/),
+            "args": (v2/*: any*/),
             "handle": "connection",
             "key": "ListOfPeoplePagination_allPeople",
-            "filters": [
-              "cursor"
-            ]
+            "filters": null
           }
         ]
       }
@@ -242,7 +259,7 @@ return {
     "operationKind": "query",
     "name": "ListOfPeoplePaginationQuery",
     "id": null,
-    "text": "query ListOfPeoplePaginationQuery(\n  $count: Int!\n  $cursor: String\n) {\n  getEveryone(offset: 0) {\n    ...ListOfPeoplePagination_paginatedList_1G22uz\n  }\n}\n\nfragment ListOfPeoplePagination_paginatedList_1G22uz on AllPeople {\n  allPeople(first: $count, cursor: $cursor) {\n    edges {\n      cursor\n      node {\n        name\n        image\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n",
+    "text": "query ListOfPeoplePaginationQuery(\n  $count: Int!\n  $cursor: String\n) {\n  getEveryone(offset: 0) {\n    ...ListOfPeoplePagination_paginatedList_1G22uz\n  }\n}\n\nfragment ListOfPeoplePagination_paginatedList_1G22uz on AllPeople {\n  allPeople(first: $count, after: $cursor) {\n    edges {\n      cursor\n      node {\n        name\n        image\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n  }\n}\n",
     "metadata": {}
   }
 };

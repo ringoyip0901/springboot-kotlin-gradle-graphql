@@ -21,7 +21,7 @@ function fetchQuery(
   }).then(response => {
     return response.json();
   }).then(response => {
-    console.log("response: ", response)
+    console.log(response)
     return response
   })
 }
