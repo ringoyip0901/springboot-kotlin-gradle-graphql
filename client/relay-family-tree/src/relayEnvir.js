@@ -23,9 +23,6 @@ function fetchQuery(
   }).then(response => {
     console.log("response: ", response)
     return response
-    // return {"data": {
-    //   "version": 3,
-    //   "getAllPeople": [{id: "2", name: "grrr", "wassup": "holler"}]}}
   })
 }
 

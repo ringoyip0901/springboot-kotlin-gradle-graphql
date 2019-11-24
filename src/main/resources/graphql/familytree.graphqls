@@ -4,17 +4,8 @@ type Query {
     relayId: ID
     getPersonById(id: ID!): Person
     getPersonByName(name: String): Person
-<<<<<<< HEAD
-    getAllPeople(offset: Int!): [Person]!
-    getEveryone: Everyone
-=======
     getAllPeople(offset: Int): [Person] 
     getEveryone(offset: Int): AllPeople
->>>>>>> 64df5aea89678a2c4519c0f8d7792857c96adba4
-}
-
-type Everyone {
-    getAllPeople(offset: Int! = 0): [Person]!
 }
 
 
@@ -24,24 +15,29 @@ type Version {
 }
 
 type AllPeople {
+    people(name: String, image: String, count: Int, cursor: String): [Person]!
+    allPeople(name: String, image: String, first: Int, cursor: String): Edges
+}
+
+type Edges {
+    edges: [Edge]
     pageInfo: PageInfo
-    edges: [Edge<Person>]
-    people(name: String, image: String): [Person]!   
 }
 
-type PageInfo {
-    hasNextPage: Boolean
-    endCursor: String
-}
-
-type Edge<Payload> {
+type Edge {
     cursor: String
-    node: Payload
+    node: Person
 }
+
+ type PageInfo {
+     hasNextPage: Boolean
+     hasPreviousPage: Boolean,
+     startCursor: String,
+     endCursor: String
+ }
 
 type Person {
     id: String!,
-    cursor: String!,
     name: String!,
     image: String,
     relationships(type: String): [Relationship]!

@@ -2,21 +2,34 @@ import React, {useState} from 'react';
 import {createPaginationContainer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 
-const ListOfPeoplePagination = props => {
-  console.log (props);
+const ListOfPeoplePagination = ({ paginatedList, relay }) => {
+
+  const loadMore = () => {
+    let hasMore =  relay.hasMore
+    console.log(hasMore());
+    return;
+  }
   return (
-    <div>
-      Hi from ListOfPeoplePagination
-    </div>
+    <React.Fragment>
+         <div>
+            {paginatedList.allPeople.edges.map((person, i) => <div key={i}>{person.node.name}<img src={person.node.image}></img></div>)}
+        </div>
+        <div>
+          <button onClick={() => loadMore()}>Load More</button>
+        </div>
+    </React.Fragment>
   );
 };
 
 export default createPaginationContainer (
-  ListOfPeople,
+  ListOfPeoplePagination,
   {
     paginatedList: graphql`
             fragment ListOfPeoplePagination_paginatedList on AllPeople @argumentDefinitions(count: { type: "Int" }, cursor: { type: "String" }) {
-                allPeople (first: $count, cursor: $cursor) @connection(key: "ListOfPeoplePagination_allPeople") {
+                allPeople (
+                    first: $count,
+                    cursor: $cursor
+                    ) @connection(key: "ListOfPeoplePagination_allPeople") {
                     edges {
                         cursor
                         node {
@@ -47,10 +60,10 @@ export default createPaginationContainer (
                 # Notice that we re-use our fragment, and the shape of this query matches our fragment spec.
                 query ListOfPeoplePaginationQuery(
                     $count: Int!
-                    $cursor: ID
+                    $cursor: String
                 ) {
                     getEveryone(offset: 0) {
-                        ...ListOfPeoplePagination_paginatedList
+                        ...ListOfPeoplePagination_paginatedList @arguments(cursor: $cursor, count: $count)
                     }
                 }
             `,

@@ -1,38 +1,48 @@
 package com.kotlingraphqlexample.kotlingraphqlexample
-
+import AllPeople
+import Edge
 import com.coxautodev.graphql.tools.GraphQLQueryResolver
-import org.springframework.stereotype.Component
 import com.coxautodev.graphql.tools.GraphQLResolver
+import org.springframework.stereotype.Component
 
-data class AllPeople (val people: List<Person>)
-
-data class Everyone (
-    val getAllPeople: List<Person>
+val edges = Edges(
+    mutableListOf(
+        Edge("1", PersonDao().getPersonById("1")),
+        Edge("2", PersonDao().getPersonById("2")),
+        Edge("3", PersonDao().getPersonById("3")),
+        Edge("4", PersonDao().getPersonById("4")),
+        Edge("5", PersonDao().getPersonById("5")),
+        Edge("6", PersonDao().getPersonById("6")),
+        Edge("7", PersonDao().getPersonById("7"))
+    ),
+    PageInfo()
 )
-//just an example for using GraphQLQueryResolver, which is used to retrieve the root fields
+
+// just an example for using GraphQLQueryResolver, which is used to retrieve the root fields
 @Component
-class PersonQueryResolver (private val personDao: PersonDao): GraphQLQueryResolver {
+class PersonQueryResolver(private val personDao: PersonDao) : GraphQLQueryResolver {
     fun getPersonById(id: String) = personDao.getPersonById(id)
     fun getPersonByName(name: String) = personDao.getPersonByName(name)
     fun getAllPeople(offset: Int) = personDao.getAllPeople(offset)
-<<<<<<< HEAD
-    fun getEveryone(): Everyone = Everyone(getAllPeople(offset = 0))
-}
-=======
-    fun getEveryone(offset: Int?): AllPeople = AllPeople(personDao.getAllPeople(offset))
+    fun getEveryone(offset: Int?): AllPeople = AllPeople(personDao.getAllPeople(offset), personDao.getAllPeople(offset))
 }
 
 @Component
-class AllPeopleQueryResolver (): GraphQLResolver<AllPeople> {
-    fun people(allPeople: AllPeople, name: String?, image: String?, count: Int?, cursor: String?): List<Person>  {
-        val filteredByName: List<Person> = if (name != null) allPeople.people.filter { it.name == name } else allPeople.people;
-        val filteredByImage: List<Person> = if (image != null) filteredByName.filter { it.image == image } else filteredByName;
-        val sortedById: List<Person> = if (cursor != null) filteredByImage.filter { Integer.parseInt(it.id) < Integer.parseInt(cursor) }.sortedBy { it.id } else filteredByImage;
-        val counted: List<Person> = sortedById.subList(0, count ?: sortedById.size - 1);
-        println("name: ${name}")
-        println(filteredByImage.count())
-        return counted;
+class AllPeopleQueryResolver(private val personDao: PersonDao) : GraphQLResolver<AllPeople> {
+    fun people(allPeople: AllPeople, name: String?, image: String?, count: Int?, cursor: String?): List<Person> {
+        val filteredByName: List<Person> = if (name != null) allPeople.people.filter { it.name == name } else allPeople.people
+        val filteredByImage: List<Person> = if (image != null) filteredByName.filter { it.image == image } else filteredByName
+        val sortedById: List<Person> = if (cursor != null) filteredByImage.filter { Integer.parseInt(it.id) < Integer.parseInt(cursor) }.sortedBy { it.id } else filteredByImage
+        val counted: List<Person> = sortedById.subList(0, count ?: sortedById.size - 1)
+        return counted
     }
-        
+
+    fun allPeople(allPeople: AllPeople, name: String?, image: String?, first: Int?, cursor: String?): Edges {
+        fun getPersonById(id: String) = personDao.getPersonById(id)
+        val filteredByName: List<Person> = if (name != null) allPeople.people.filter { it.name == name } else allPeople.people
+        val filteredByImage: List<Person> = if (image != null) filteredByName.filter { it.image == image } else filteredByName
+        val sortedById: List<Person> = if (cursor != null) filteredByImage.filter { Integer.parseInt(it.id) < Integer.parseInt(cursor) }.sortedBy { it.id } else filteredByImage
+        val counted: List<Person> = sortedById.subList(0, first ?: sortedById.size - 1)
+        return edges
+    }
 }
->>>>>>> 64df5aea89678a2c4519c0f8d7792857c96adba4

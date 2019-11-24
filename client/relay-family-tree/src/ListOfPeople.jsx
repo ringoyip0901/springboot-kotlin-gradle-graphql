@@ -18,7 +18,6 @@ export default createFragmentContainer(
                     id
                     name
                     image
-
                 }
               }
         `}

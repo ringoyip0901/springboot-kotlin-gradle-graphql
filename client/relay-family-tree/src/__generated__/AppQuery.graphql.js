@@ -1,10 +1,6 @@
 /**
  * @flow
-<<<<<<< HEAD
- * @relayHash 61f8e12ae7fee5f1670a59676d89b3fe
-=======
- * @relayHash 37050050cf846159cb9f83bb61f01218
->>>>>>> 64df5aea89678a2c4519c0f8d7792857c96adba4
+ * @relayHash 5685cb6f00f001fb14b78677486b7878
  */
 
 /* eslint-disable */
@@ -13,17 +9,14 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-<<<<<<< HEAD
-type PeopleContainer_list$ref = any;
-=======
-type ListOfPeople_list$ref = any;
->>>>>>> 64df5aea89678a2c4519c0f8d7792857c96adba4
+type ListOfPeoplePagination_paginatedList$ref = any;
 type PersonImageContainer_getPersonByName$ref = any;
 type PersonNameContainer_getPersonByName$ref = any;
 type VersionContainer_version$ref = any;
 export type AppQueryVariables = {|
   offset: number,
-  name?: ?string,
+  count?: ?number,
+  cursor?: ?string,
 |};
 export type AppQueryResponse = {|
   +version: ?{|
@@ -33,11 +26,7 @@ export type AppQueryResponse = {|
     +$fragmentRefs: PersonNameContainer_getPersonByName$ref & PersonImageContainer_getPersonByName$ref
   |},
   +getEveryone: ?{|
-<<<<<<< HEAD
-    +$fragmentRefs: PeopleContainer_list$ref
-=======
-    +$fragmentRefs: ListOfPeople_list$ref
->>>>>>> 64df5aea89678a2c4519c0f8d7792857c96adba4
+    +$fragmentRefs: ListOfPeoplePagination_paginatedList$ref
   |},
 |};
 export type AppQuery = {|
@@ -50,7 +39,8 @@ export type AppQuery = {|
 /*
 query AppQuery(
   $offset: Int!
-  $name: String
+  $count: Int
+  $cursor: String
 ) {
   version {
     ...VersionContainer_version
@@ -59,26 +49,25 @@ query AppQuery(
     ...PersonNameContainer_getPersonByName
     ...PersonImageContainer_getPersonByName
   }
-<<<<<<< HEAD
-  getEveryone {
-    ...PeopleContainer_list
-  }
-}
-
-fragment PeopleContainer_list on Everyone {
-  list {
-=======
   getEveryone(offset: $offset) {
-    ...ListOfPeople_list_2aiVTE
+    ...ListOfPeoplePagination_paginatedList_1G22uz
   }
 }
 
-fragment ListOfPeople_list_2aiVTE on AllPeople {
-  people(name: $name) {
-    id
->>>>>>> 64df5aea89678a2c4519c0f8d7792857c96adba4
-    name
-    image
+fragment ListOfPeoplePagination_paginatedList_1G22uz on AllPeople {
+  allPeople(first: $count, cursor: $cursor) {
+    edges {
+      cursor
+      node {
+        name
+        image
+        __typename
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
   }
 }
 
@@ -106,7 +95,13 @@ var v0 = [
   },
   {
     "kind": "LocalArgument",
-    "name": "name",
+    "name": "count",
+    "type": "Int",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "cursor",
     "type": "String",
     "defaultValue": null
   }
@@ -118,24 +113,6 @@ v1 = [
     "value": "Prince William"
   }
 ],
-<<<<<<< HEAD
-v1 = [
-  {
-    "kind": "ScalarField",
-    "alias": null,
-    "name": "name",
-    "args": null,
-    "storageKey": null
-  },
-  {
-    "kind": "ScalarField",
-    "alias": null,
-    "name": "image",
-    "args": null,
-    "storageKey": null
-  }
-];
-=======
 v2 = [
   {
     "kind": "Variable",
@@ -143,13 +120,11 @@ v2 = [
     "variableName": "offset"
   }
 ],
-v3 = [
-  {
-    "kind": "Variable",
-    "name": "name",
-    "variableName": "name"
-  }
-],
+v3 = {
+  "kind": "Variable",
+  "name": "cursor",
+  "variableName": "cursor"
+},
 v4 = {
   "kind": "ScalarField",
   "alias": null,
@@ -163,8 +138,15 @@ v5 = {
   "name": "image",
   "args": null,
   "storageKey": null
-};
->>>>>>> 64df5aea89678a2c4519c0f8d7792857c96adba4
+},
+v6 = [
+  (v3/*: any*/),
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "count"
+  }
+];
 return {
   "kind": "Request",
   "fragment": {
@@ -216,24 +198,21 @@ return {
         "alias": null,
         "name": "getEveryone",
         "storageKey": null,
-<<<<<<< HEAD
-        "args": null,
-        "concreteType": "Everyone",
-=======
         "args": (v2/*: any*/),
         "concreteType": "AllPeople",
->>>>>>> 64df5aea89678a2c4519c0f8d7792857c96adba4
         "plural": false,
         "selections": [
           {
             "kind": "FragmentSpread",
-<<<<<<< HEAD
-            "name": "PeopleContainer_list",
-            "args": null
-=======
-            "name": "ListOfPeople_list",
-            "args": (v3/*: any*/)
->>>>>>> 64df5aea89678a2c4519c0f8d7792857c96adba4
+            "name": "ListOfPeoplePagination_paginatedList",
+            "args": [
+              {
+                "kind": "Variable",
+                "name": "count",
+                "variableName": "count"
+              },
+              (v3/*: any*/)
+            ]
           }
         ]
       }
@@ -277,16 +256,6 @@ return {
         "args": (v1/*: any*/),
         "concreteType": "Person",
         "plural": false,
-        "selections": (v1/*: any*/)
-      },
-      {
-        "kind": "LinkedField",
-        "alias": null,
-        "name": "getEveryone",
-        "storageKey": null,
-        "args": null,
-        "concreteType": "Everyone",
-        "plural": false,
         "selections": [
           (v4/*: any*/),
           (v5/*: any*/)
@@ -304,31 +273,87 @@ return {
           {
             "kind": "LinkedField",
             "alias": null,
-<<<<<<< HEAD
-            "name": "list",
+            "name": "allPeople",
             "storageKey": null,
-            "args": null,
-            "concreteType": "Person",
-            "plural": true,
-            "selections": (v1/*: any*/)
-=======
-            "name": "people",
-            "storageKey": null,
-            "args": (v3/*: any*/),
-            "concreteType": "Person",
-            "plural": true,
+            "args": (v6/*: any*/),
+            "concreteType": "Edges",
+            "plural": false,
             "selections": [
               {
-                "kind": "ScalarField",
+                "kind": "LinkedField",
                 "alias": null,
-                "name": "id",
+                "name": "edges",
+                "storageKey": null,
                 "args": null,
-                "storageKey": null
+                "concreteType": "Edge",
+                "plural": true,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "cursor",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "node",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "Person",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/),
+                      (v5/*: any*/),
+                      {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "name": "__typename",
+                        "args": null,
+                        "storageKey": null
+                      }
+                    ]
+                  }
+                ]
               },
-              (v4/*: any*/),
-              (v5/*: any*/)
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "pageInfo",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "endCursor",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "hasNextPage",
+                    "args": null,
+                    "storageKey": null
+                  }
+                ]
+              }
             ]
->>>>>>> 64df5aea89678a2c4519c0f8d7792857c96adba4
+          },
+          {
+            "kind": "LinkedHandle",
+            "alias": null,
+            "name": "allPeople",
+            "args": (v6/*: any*/),
+            "handle": "connection",
+            "key": "ListOfPeoplePagination_allPeople",
+            "filters": [
+              "cursor"
+            ]
           }
         ]
       }
@@ -338,19 +363,11 @@ return {
     "operationKind": "query",
     "name": "AppQuery",
     "id": null,
-<<<<<<< HEAD
-    "text": "query AppQuery {\n  version {\n    ...VersionContainer_version\n  }\n  getPersonByName(name: \"Prince William\") {\n    ...PersonNameContainer_getPersonByName\n    ...PersonImageContainer_getPersonByName\n  }\n  getEveryone {\n    ...PeopleContainer_list\n  }\n}\n\nfragment PeopleContainer_list on Everyone {\n  list {\n    name\n    image\n  }\n}\n\nfragment PersonImageContainer_getPersonByName on Person {\n  image\n}\n\nfragment PersonNameContainer_getPersonByName on Person {\n  name\n}\n\nfragment VersionContainer_version on Version {\n  previous\n  current\n}\n",
-=======
-    "text": "query AppQuery(\n  $offset: Int!\n  $name: String\n) {\n  version {\n    ...VersionContainer_version\n  }\n  getPersonByName(name: \"Prince William\") {\n    ...PersonNameContainer_getPersonByName\n    ...PersonImageContainer_getPersonByName\n  }\n  getEveryone(offset: $offset) {\n    ...ListOfPeople_list_2aiVTE\n  }\n}\n\nfragment ListOfPeople_list_2aiVTE on AllPeople {\n  people(name: $name) {\n    id\n    name\n    image\n  }\n}\n\nfragment PersonImageContainer_getPersonByName on Person {\n  image\n}\n\nfragment PersonNameContainer_getPersonByName on Person {\n  name\n}\n\nfragment VersionContainer_version on Version {\n  previous\n  current\n}\n",
->>>>>>> 64df5aea89678a2c4519c0f8d7792857c96adba4
+    "text": "query AppQuery(\n  $offset: Int!\n  $count: Int\n  $cursor: String\n) {\n  version {\n    ...VersionContainer_version\n  }\n  getPersonByName(name: \"Prince William\") {\n    ...PersonNameContainer_getPersonByName\n    ...PersonImageContainer_getPersonByName\n  }\n  getEveryone(offset: $offset) {\n    ...ListOfPeoplePagination_paginatedList_1G22uz\n  }\n}\n\nfragment ListOfPeoplePagination_paginatedList_1G22uz on AllPeople {\n  allPeople(first: $count, cursor: $cursor) {\n    edges {\n      cursor\n      node {\n        name\n        image\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PersonImageContainer_getPersonByName on Person {\n  image\n}\n\nfragment PersonNameContainer_getPersonByName on Person {\n  name\n}\n\nfragment VersionContainer_version on Version {\n  previous\n  current\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-<<<<<<< HEAD
-(node/*: any*/).hash = 'a97b87c03867b9fbbc725e6bd4c62820';
-=======
-(node/*: any*/).hash = '7fdd908d506a2ad33aa22b3300a3dbd9';
->>>>>>> 64df5aea89678a2c4519c0f8d7792857c96adba4
+(node/*: any*/).hash = '0c2d0bb56d5673502909702533370a69';
 module.exports = node;
