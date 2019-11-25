@@ -28,7 +28,7 @@ function App () {
         `}
       variables={{
         offset: 0,
-        count: 1,
+        count: 0,
         cursor: "1"
       }}
       render={({error, props}) => {

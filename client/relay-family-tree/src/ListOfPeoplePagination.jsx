@@ -2,12 +2,11 @@ import React, {useState} from 'react';
 import {createPaginationContainer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 
-let totalCount = 2;
-
+let totalCount = 1;
+const pointer = ["0","1", "2", "3", "4", "5", "6", "7", "8"]
 const ListOfPeoplePagination = ({ paginatedList, relay }) => {
   const loadMore = () => {
-    console.log("Has more? : ", relay.hasMore())
-    return relay.loadMore(1)
+    return relay.loadMore(totalCount++)
 //     return relay.refetchConnection(totalCount++, (error) => (error))
   }
   return (
@@ -34,6 +33,7 @@ export default createPaginationContainer (
                     edges {
                         cursor
                         node {
+                          id
                           name
                           image
                         }
@@ -51,22 +51,19 @@ export default createPaginationContainer (
   {
     direction: 'forward',
     getConnectionFromProps(props) { //if it's included load more won't run for some reason
-      return props.paginatedList
+      return props.paginatedList.allPeople
     },
     getFragmentVariables (prevVars, totalCount) {
       //totalCount is the total number of items
-      console.log(prevVars)
-      console.log(totalCount)
       return {
         ...prevVars,
         count: totalCount,
       };
     },
     getVariables (props, {count, cursor}, fragmentVariables) {
-      console.log(fragmentVariables)
       return {
         count,
-        cursor: "1",
+        cursor,
       };
     },
     query: graphql`

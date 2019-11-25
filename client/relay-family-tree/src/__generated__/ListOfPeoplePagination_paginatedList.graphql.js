@@ -16,6 +16,7 @@ export type ListOfPeoplePagination_paginatedList = {|
     +edges: ?$ReadOnlyArray<?{|
       +cursor: ?string,
       +node: ?{|
+        +id: string,
         +name: string,
         +image: ?string,
       |},
@@ -105,6 +106,13 @@ const node/*: ReaderFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
+                  "name": "id",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
                   "name": "name",
                   "args": null,
                   "storageKey": null
@@ -171,5 +179,5 @@ const node/*: ReaderFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '90daefbfac42f70b31c088a3812a2441';
+(node/*: any*/).hash = '477073e38a762fb002dd9b94fc6cb52d';
 module.exports = node;
