@@ -13,7 +13,8 @@ val edges = Edges(
         Edge("4", PersonDao().getPersonById("4")),
         Edge("5", PersonDao().getPersonById("5")),
         Edge("6", PersonDao().getPersonById("6")),
-        Edge("7", PersonDao().getPersonById("7"))
+        Edge("7", PersonDao().getPersonById("7")),
+        Edge("8", PersonDao().getPersonById("8"))
     ),
     PageInfo()
 )
@@ -37,12 +38,20 @@ class AllPeopleQueryResolver(private val personDao: PersonDao) : GraphQLResolver
         return counted
     }
 
-    fun allPeople(allPeople: AllPeople, name: String?, image: String?, first: Int?, after: String?): Edges {
+    fun allPeople(allPeople: AllPeople, name: String?, image: String?, first: Int, after: String): Edges {
 //        fun getPersonById(id: String) = personDao.getPersonById(id)
 //        val filteredByName: List<Person> = if (name != null) allPeople.people.filter { it.name == name } else allPeople.people
 //        val filteredByImage: List<Person> = if (image != null) filteredByName.filter { it.image == image } else filteredByName
 //        val sortedById: List<Person> = if (cursor != null) filteredByImage.filter { Integer.parseInt(it.id) < Integer.parseInt(cursor) }.sortedBy { it.id } else filteredByImage
-//        val counted: List<Person> = sortedById.subList(0, first ?: sortedById.size - 1)
-        return edges
+        // val paginatedEdges: List<Person> = edges.edges.subList(after, first)
+        println("first: " + first)
+        println("after: " + after)
+        val listOfEdges = edges.edges;
+        val afterCursor: String? = after
+        val indexOfAfterCursor: Int = listOfEdges.indexOfFirst{ it.cursor == afterCursor}
+        val endIndex: Int = if (first > listOfEdges.size) listOfEdges.size else first
+        val selectedListOfEdges = listOfEdges.slice(IntRange(indexOfAfterCursor, first))
+        val resultEdges = Edges(selectedListOfEdges, PageInfo(endCursor = after))
+        return resultEdges
     }
 }

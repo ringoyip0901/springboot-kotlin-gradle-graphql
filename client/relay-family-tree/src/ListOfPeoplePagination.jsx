@@ -2,10 +2,13 @@ import React, {useState} from 'react';
 import {createPaginationContainer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 
+let totalCount = 2;
+
 const ListOfPeoplePagination = ({ paginatedList, relay }) => {
   const loadMore = () => {
-    let hasMore = relay.hasMore
-    return relay.loadMore(2);;
+    console.log("Has more? : ", relay.hasMore())
+    return relay.loadMore(1)
+//     return relay.refetchConnection(totalCount++, (error) => (error))
   }
   return (
     <React.Fragment>
@@ -23,7 +26,7 @@ export default createPaginationContainer (
   ListOfPeoplePagination,
   {
     paginatedList: graphql`
-            fragment ListOfPeoplePagination_paginatedList on AllPeople @argumentDefinitions(count: { type: "Int" }, cursor: { type: "String" }) {
+            fragment ListOfPeoplePagination_paginatedList on AllPeople @argumentDefinitions(count: { type: "Int", defaultValue: 1 }, cursor: { type: "String", defaultValue: "1" }) {
                 allPeople (
                     first: $count,
                     after: $cursor,
@@ -47,12 +50,13 @@ export default createPaginationContainer (
   },
   {
     direction: 'forward',
-    getConnectionFromProps(props) {
+    getConnectionFromProps(props) { //if it's included load more won't run for some reason
       return props.paginatedList
     },
     getFragmentVariables (prevVars, totalCount) {
-      console.log("previous variables: ", prevVars);
-      console.log("totalCount ", totalCount)
+      //totalCount is the total number of items
+      console.log(prevVars)
+      console.log(totalCount)
       return {
         ...prevVars,
         count: totalCount,
@@ -62,7 +66,7 @@ export default createPaginationContainer (
       console.log(fragmentVariables)
       return {
         count,
-        after: cursor,
+        cursor: "1",
       };
     },
     query: graphql`

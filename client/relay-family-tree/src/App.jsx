@@ -29,7 +29,7 @@ function App () {
       variables={{
         offset: 0,
         count: 1,
-        cursor: "2"
+        cursor: "1"
       }}
       render={({error, props}) => {
         if (error) {
