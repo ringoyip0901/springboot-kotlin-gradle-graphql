@@ -6,17 +6,25 @@ let totalCount = 1;
 const pointer = ["0","1", "2", "3", "4", "5", "6", "7", "8"];
 
 const ListOfPeoplePagination = ({ paginatedList, relay }) => {
-  const loadMore = () => {
-    return relay.loadMore(totalCount, () => totalCount++)
-//     return relay.refetchConnection(totalCount++, (error) => (error))
-  }
+
+    const _loadMore = () => {
+        if(!relay.hasMore() || relay.isLoading()) {
+            if (!relay.hasMore()) {
+                alert("No more other family members!")
+            }
+            return;
+        }
+        relay.loadMore(
+            totalCount,  // Fetch the next {totalCount} feed items
+        );
+    }
   return (
     <React.Fragment>
          <div>
             {paginatedList.allPeople.edges.map((person, i) => <div key={i}>{person.node.name}<img src={person.node.image}></img></div>)}
         </div>
         <div>
-          <button onClick={() => loadMore()}>Load More</button>
+          <button onClick={() => _loadMore()}>Load More</button>
         </div>
     </React.Fragment>
   );
@@ -61,10 +69,10 @@ export default createPaginationContainer (
         count: totalCount,
       };
     },
-    getVariables (props, {count, cursor}, fragmentVariables) {
+    getVariables (props, paginationList, fragmentVariables) {
       return {
-        count,
-        cursor,
+        count: paginationList.count,
+        cursor: paginationList.cursor,
       };
     },
     query: graphql`

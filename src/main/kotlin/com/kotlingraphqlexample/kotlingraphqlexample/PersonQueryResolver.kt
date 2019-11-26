@@ -38,20 +38,23 @@ class AllPeopleQueryResolver(private val personDao: PersonDao) : GraphQLResolver
         return counted
     }
 
-    fun allPeople(allPeople: AllPeople, name: String?, image: String?, first: Int, after: String): Edges {
+    fun allPeople(allPeople: AllPeople, name: String?, image: String?, first: Int, after: String = "1"): Edges {
 //        fun getPersonById(id: String) = personDao.getPersonById(id)
 //        val filteredByName: List<Person> = if (name != null) allPeople.people.filter { it.name == name } else allPeople.people
 //        val filteredByImage: List<Person> = if (image != null) filteredByName.filter { it.image == image } else filteredByName
 //        val sortedById: List<Person> = if (cursor != null) filteredByImage.filter { Integer.parseInt(it.id) < Integer.parseInt(cursor) }.sortedBy { it.id } else filteredByImage
         // val paginatedEdges: List<Person> = edges.edges.subList(after, first)
         println("first: " + first)
-        println("after: " + after)
+        println("cursor: " + after)
         val listOfEdges = edges.edges;
-        val afterCursor: String? = after
-        val indexOfAfterCursor: Int = listOfEdges.indexOfFirst{ it.cursor == afterCursor}
-        val endIndex: Int = if (first > listOfEdges.size) listOfEdges.size else first
-        val selectedListOfEdges = listOfEdges.slice(IntRange(indexOfAfterCursor, first))
-        val resultEdges = Edges(selectedListOfEdges, PageInfo(endCursor = after))
+        val indexOfAfterCursor: Int = listOfEdges.indexOfFirst{ it.cursor == after}
+
+        val hasNextPage: Boolean = if (after == "7") false else true //Relay can understand whether a refetch is necessary based on this piece of information
+        val selectedListOfEdges = listOfEdges.slice(IntRange(indexOfAfterCursor, indexOfAfterCursor + 1))
+        println("IndexOfAfterCursor: " + indexOfAfterCursor)
+        //val selectedListOfEdges = mutableListOf<Edge>(listOfEdges[indexOfAfterCursor])
+        println(selectedListOfEdges.size)
+        val resultEdges = Edges(selectedListOfEdges, PageInfo(hasNextPage = hasNextPage, endCursor = selectedListOfEdges.last().cursor))
         return resultEdges
     }
 }

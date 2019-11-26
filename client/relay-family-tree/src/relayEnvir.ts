@@ -6,8 +6,8 @@ import {
 } from 'relay-runtime';
 
 function fetchQuery(
-  operation,
-  variables
+  operation: any,
+  variables: any
 ) {
   return fetch('http://localhost:8080/graphql', {
     method: 'POST',
