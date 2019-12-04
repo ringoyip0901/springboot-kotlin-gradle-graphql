@@ -17,7 +17,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "relay": "relay-compiler --src ./src --schema ../../src/main/resources/graphql/familytree.graphqls"
+    "relay": "relay-compiler --src ./src --schema ../../backend/src/main/resources/graphql/familytree.graphqls"
   },
   "eslintConfig": {
     "extends": "react-app"
