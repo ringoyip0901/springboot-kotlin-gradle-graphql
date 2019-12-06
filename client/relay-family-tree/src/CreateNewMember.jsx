@@ -5,7 +5,7 @@ import environment from "./relayEnvir";
 
 const mutation = graphql`
     mutation CreateNewMemberMutation {
-    createPerson(name: "Fake Queen", image: "Fake Image") {
+    createPerson(name: "fake queen", image: "random image") {
         edges {
             cursor
             node {

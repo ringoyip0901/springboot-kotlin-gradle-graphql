@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 5e21631a57b0b3c02829aa522417887e
+ * @relayHash 7205e744690179d75f1dcaf60af154f1
  */
 
 /* eslint-disable */
@@ -30,7 +30,7 @@ export type CreateNewMemberMutation = {|
 
 /*
 mutation CreateNewMemberMutation {
-  createPerson(name: "Fake Queen", image: "Fake Image") {
+  createPerson(name: "fake queen", image: "random image") {
     edges {
       cursor
       node {
@@ -48,17 +48,17 @@ var v0 = [
     "kind": "LinkedField",
     "alias": null,
     "name": "createPerson",
-    "storageKey": "createPerson(image:\"Fake Image\",name:\"Fake Queen\")",
+    "storageKey": "createPerson(image:\"random image\",name:\"fake queen\")",
     "args": [
       {
         "kind": "Literal",
         "name": "image",
-        "value": "Fake Image"
+        "value": "random image"
       },
       {
         "kind": "Literal",
         "name": "name",
-        "value": "Fake Queen"
+        "value": "fake queen"
       }
     ],
     "concreteType": "Edges",
@@ -130,11 +130,11 @@ return {
     "operationKind": "mutation",
     "name": "CreateNewMemberMutation",
     "id": null,
-    "text": "mutation CreateNewMemberMutation {\n  createPerson(name: \"Fake Queen\", image: \"Fake Image\") {\n    edges {\n      cursor\n      node {\n        id\n        name\n      }\n    }\n  }\n}\n",
+    "text": "mutation CreateNewMemberMutation {\n  createPerson(name: \"fake queen\", image: \"random image\") {\n    edges {\n      cursor\n      node {\n        id\n        name\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'c4a46a8559c3cced0f252d65e787ff8a';
+(node/*: any*/).hash = '84c9cbe3c62c0a6340c1c98a641e29f6';
 module.exports = node;
