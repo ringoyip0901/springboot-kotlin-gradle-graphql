@@ -56,5 +56,5 @@ type Relationship {
 }
 
 type Mutation {
-    createPerson(name: String, image: String): [Person]!
+    createPerson(name: String, image: String): Edges!
 }
