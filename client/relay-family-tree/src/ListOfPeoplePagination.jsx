@@ -3,7 +3,6 @@ import {createPaginationContainer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 
 let totalCount = 1;
-const pointer = ["0","1", "2", "3", "4", "5", "6", "7", "8"];
 
 const ListOfPeoplePagination = ({ paginatedList, relay }) => {
 
@@ -59,11 +58,10 @@ export default createPaginationContainer (
   },
   {
     direction: 'forward',
-    getConnectionFromProps(props) { //if it's included load more won't run for some reason
+    getConnectionFromProps(props) {
       return props.paginatedList && props.paginatedList.allPeople
     },
     getFragmentVariables (prevVars, totalCount) {
-      //totalCount is the total number of items
       return {
         ...prevVars,
         count: totalCount,

@@ -4,8 +4,8 @@ import PersonNameContainer from './PersonNameContainer.jsx';
 import PersonImageContainer from './PersonImageContainer.jsx';
 import ListOfPeople from './ListOfPeople.jsx';
 import VersionContainer from './VersionContainer';
+import CreateNewMember from './CreateNewMember'
 import environment from './relayEnvir.ts';
-import logo from './logo.svg';
 import './App.css';
 import graphql from 'babel-plugin-relay/macro';
 import ListOfPeoplePagination from './ListOfPeoplePagination.jsx';
@@ -39,6 +39,7 @@ function App () {
             <React.Fragment>
               {/* <VersionContainer version={props.version}/> */}
                 <ListOfPeoplePagination paginatedList={props.getEveryone}/>
+                <CreateNewMember />
                {/*<ListOfPeople list={props.getEveryone} />*/}
               {/* <PersonNameContainer getPersonByName={props.getPersonByName}/>
               <PersonImageContainer getPersonByName={props.getPersonByName}/> */}
