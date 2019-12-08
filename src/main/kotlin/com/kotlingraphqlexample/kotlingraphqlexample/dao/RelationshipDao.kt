@@ -1,5 +1,6 @@
-package com.kotlingraphqlexample.kotlingraphqlexample
+package com.kotlingraphqlexample.kotlingraphqlexample.dao
 
+import com.kotlingraphqlexample.kotlingraphqlexample.model.Relationship
 import org.springframework.stereotype.Component
 
 //hard coded data

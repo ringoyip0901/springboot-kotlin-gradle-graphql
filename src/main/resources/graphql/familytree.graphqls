@@ -1,13 +1,32 @@
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
+
 type Query {
     version: Version
     message: String!
     relayId: ID
     getPersonById(id: ID!): Person
     getPersonByName(name: String): Person
-    getAllPeople(offset: Int): [Person] 
+    getAllPeople(offset: Int): [Person]
     getEveryone(offset: Int): AllPeople
 }
 
+type Mutation {
+    createPerson(name: String, image: String): Edges!
+}
+
+type Subscription {
+    helloWorld(name: String!): String!
+    timer: Tick
+    subscribeToFamily: Edge
+}
+
+type Tick {
+    x: String
+}
 
 type Version {
     current: String
@@ -43,18 +62,9 @@ type Person {
     relationships(type: String): [Relationship]!
 }
 
-#extend type Query {
-#    getPersonById(id: ID!): Person
-#    getPersonByName(name: String): Person
-#    getAllPeople(offset: Int!): [Person]!
-#}
-
 type Relationship {
     from: Person!
     to: Person!
     relationship: String!
 }
 
-type Mutation {
-    createPerson(name: String, image: String): Edges!
-}
