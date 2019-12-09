@@ -12,14 +12,12 @@ import org.springframework.web.socket.handler.PerConnectionWebSocketHandler
 @EnableWebSocketMessageBroker
 class WebSocketConfig: WebSocketMessageBrokerConfigurer {
 
-  @Override
   override fun registerStompEndpoints(registry: StompEndpointRegistry) {
     registry.addEndpoint("/subscriptions").withSockJS();
   }
 
-  @Override
   override fun configureMessageBroker(registry: MessageBrokerRegistry) {
-    registry.setApplicationDestinationPrefixes("/app");
+    registry.setApplicationDestinationPrefixes("/family");
     registry.enableSimpleBroker("/topic");
   }
 

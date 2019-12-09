@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {commitMutation} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
-import environment from "./relayEnvir";
+import environment from './relayEnvir';
 
 const mutation = graphql`
     mutation CreateNewMemberMutation {
@@ -17,30 +17,29 @@ const mutation = graphql`
 }`;
 
 const createNewMember = (name, image, callback) => {
-    const variables = {
-        input: {
-            name,
-            image
-        }
-    };
-    commitMutation(environment,
-        {
-            mutation,
-            variables,
-            onCompleted: () => {
-                callback()
-            },
-            onError: err => console.error(err)
-        })
+  const variables = {
+    input: {
+      name,
+      image,
+    },
+  };
+  commitMutation (environment, {
+    mutation,
+    variables,
+    onCompleted: () => {
+      callback ();
+    },
+    onError: err => console.error (err),
+  });
 };
 
 const CreateNewMember = () => {
-    const _createMember = () => {
-        createNewMember("Fake Queen", "Image of Fake Queen", () => console.log("Mutation Completed"))
-    }
-    return (
-        <button onClick={() => _createMember()}>Add One More Queen</button>
-    )
-}
+  const _createMember = () => {
+    createNewMember ('Fake Queen', 'Image of Fake Queen', () =>
+      console.log ('Mutation Completed')
+    );
+  };
+  return <button onClick={() => _createMember ()}>Add One More Queen</button>;
+};
 
 export default CreateNewMember;

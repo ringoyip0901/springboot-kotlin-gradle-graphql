@@ -19,9 +19,8 @@ type Mutation {
 }
 
 type Subscription {
-    helloWorld(name: String!): String!
     timer: Tick
-    subscribeToFamily: Edge
+    subscribeToFamily: Edges!
 }
 
 type Tick {

@@ -10,5 +10,4 @@ import org.springframework.stereotype.Controller
 @Component
 class PersonMutationResolver(private val personDao: PersonDao) : GraphQLMutationResolver {
     fun createPerson(name: String, image: String) = personDao.createPerson(name, image)
-
 }
