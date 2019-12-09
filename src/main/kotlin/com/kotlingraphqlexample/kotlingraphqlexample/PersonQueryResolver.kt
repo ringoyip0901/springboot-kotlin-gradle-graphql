@@ -5,23 +5,7 @@ import com.coxautodev.graphql.tools.GraphQLQueryResolver
 import com.coxautodev.graphql.tools.GraphQLResolver
 import org.springframework.stereotype.Component
 
-//val originalData = PersonDao().data;
-//
 val edges = Edges(data.map { person -> Edge(person.id, PersonDao().getPersonById(person.id)) }, PageInfo());
-
-//val edges = Edges(
-//    mutableListOf(
-//        Edge("1", PersonDao().getPersonById("1")),
-//        Edge("2", PersonDao().getPersonById("2")),
-//        Edge("3", PersonDao().getPersonById("3")),
-//        Edge("4", PersonDao().getPersonById("4")),
-//        Edge("5", PersonDao().getPersonById("5")),
-//        Edge("6", PersonDao().getPersonById("6")),
-//        Edge("7", PersonDao().getPersonById("7")),
-//        Edge("8", PersonDao().getPersonById("8"))
-//    ),
-//    PageInfo()
-//)
 
 // just an example for using GraphQLQueryResolver, which is used to retrieve the root fields
 @Component
