@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {QueryRenderer} from 'react-relay';
 import PersonNameContainer from './PersonNameContainer.jsx';
 import PersonImageContainer from './PersonImageContainer.jsx';
 import ListOfPeople from './ListOfPeople.jsx';
 import VersionContainer from './VersionContainer';
-import CreateNewMember from './CreateNewMember'
+import CreateNewMember from './CreateNewMember';
 import environment from './relayEnvir.ts';
 import './App.css';
 import graphql from 'babel-plugin-relay/macro';
 import ListOfPeoplePagination from './ListOfPeoplePagination.jsx';
+import NewMemberSubscription from './SubscribeToFamily.jsx'
+import SubscribeListOfPeople from './SubscribeListOfPeople.jsx'
 
 function App () {
   return (
@@ -24,7 +26,7 @@ function App () {
         `}
       variables={{
         offset: 0,
-        count: 1,
+        count: 7,
         // cursor: "1"
       }}
       render={({error, props}) => {
@@ -38,11 +40,9 @@ function App () {
           return (
             <React.Fragment>
               {/* <VersionContainer version={props.version}/> */}
-                <ListOfPeoplePagination paginatedList={props.getEveryone}/>
-                <CreateNewMember />
-               {/*<ListOfPeople list={props.getEveryone} />*/}
-              {/* <PersonNameContainer getPersonByName={props.getPersonByName}/>
-              <PersonImageContainer getPersonByName={props.getPersonByName}/> */}
+              <ListOfPeoplePagination paginatedList={props.getEveryone} />
+              {/*<SubscribeListOfPeople allPeople={null}/>*/}
+              <CreateNewMember />
             </React.Fragment>
           );
         } else {

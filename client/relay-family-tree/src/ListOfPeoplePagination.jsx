@@ -1,30 +1,40 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {createPaginationContainer} from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
+import SubscribeToFamily from "./SubscribeToFamily";
 
 let totalCount = 1;
 
-const ListOfPeoplePagination = ({ paginatedList, relay }) => {
+const ListOfPeoplePagination = ({paginatedList, relay}) => {
 
-    const _loadMore = () => {
-        if(!relay.hasMore() || relay.isLoading()) {
-            if (!relay.hasMore()) {
-                alert("No more other family members!")
-            }
-            return;
-        }
-        relay.loadMore(
-            totalCount,  // Fetch the next {totalCount} feed items
-        );
+    useEffect(() => {
+        SubscribeToFamily();
+    }, []);
+
+  const _loadMore = () => {
+    if (!relay.hasMore () || relay.isLoading ()) {
+      if (!relay.hasMore ()) {
+        alert ('No more other family members!');
+      }
+      return;
     }
+    relay.loadMore (
+      totalCount // Fetch the next {totalCount} feed items
+    );
+  };
+
+  // const family = paginatedList.allPeople.edges;
+
   return (
     <React.Fragment>
-         <div>
-            {paginatedList.allPeople.edges.map((person, i) => <div key={i}>{person.node.name}<img src={person.node.image}></img></div>)}
-        </div>
-        <div>
-          <button onClick={() => _loadMore()}>Load More</button>
-        </div>
+      <div>
+        {paginatedList.allPeople.edges.map ((person, i) => (
+          <div key={i}>{person.node.name}<img src={person.node.image} /></div>
+        ))}
+      </div>
+      <div>
+        <button onClick={() => _loadMore ()}>Load More</button>
+      </div>
     </React.Fragment>
   );
 };
@@ -58,8 +68,8 @@ export default createPaginationContainer (
   },
   {
     direction: 'forward',
-    getConnectionFromProps(props) {
-      return props.paginatedList && props.paginatedList.allPeople
+    getConnectionFromProps (props) {
+      return props.paginatedList && props.paginatedList.allPeople;
     },
     getFragmentVariables (prevVars, totalCount) {
       return {

@@ -1,4 +1,4 @@
-package com.kotlingraphqlexample.kotlingraphqlexample
+package com.kotlingraphqlexample.kotlingraphqlexample.resolvers
 import com.coxautodev.graphql.tools.GraphQLQueryResolver
 import org.springframework.stereotype.Component
 

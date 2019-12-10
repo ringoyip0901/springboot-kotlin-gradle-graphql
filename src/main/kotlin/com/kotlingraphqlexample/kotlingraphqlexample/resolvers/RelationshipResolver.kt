@@ -1,6 +1,8 @@
-package com.kotlingraphqlexample.kotlingraphqlexample
+package com.kotlingraphqlexample.kotlingraphqlexample.resolvers
 
 import com.coxautodev.graphql.tools.GraphQLResolver
+import com.kotlingraphqlexample.kotlingraphqlexample.dao.PersonDao
+import com.kotlingraphqlexample.kotlingraphqlexample.model.Relationship
 import org.springframework.stereotype.Component
 
 @Component
