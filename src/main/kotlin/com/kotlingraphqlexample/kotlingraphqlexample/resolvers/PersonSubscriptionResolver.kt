@@ -6,11 +6,13 @@ import com.kotlingraphqlexample.kotlingraphqlexample.dao.PersonDao
 import com.kotlingraphqlexample.kotlingraphqlexample.data.data
 import com.kotlingraphqlexample.kotlingraphqlexample.model.Edges
 import com.kotlingraphqlexample.kotlingraphqlexample.model.PageInfo
+import com.kotlingraphqlexample.kotlingraphqlexample.model.Person
 import java.time.Duration
 import java.time.LocalDateTime
 import java.util.*
 import java.util.function.Consumer
 import org.reactivestreams.Publisher
+import org.reactivestreams.Subscriber
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
 import org.springframework.stereotype.Component
@@ -48,10 +50,13 @@ class PersonSubscriptionResolver : GraphQLSubscriptionResolver {
         })
   }
 
-  @MessageMapping("/subscribe")
-  @SendTo("/topic/family")
-  fun getEveryone(offset: Int?): Publisher<AllPeople> = Flux.create(
-          Consumer<FluxSink<AllPeople>> { sink ->
-            sink.next(AllPeople(PersonDao().getAllPeople(offset), getFamily()))
-          })
+//  @MessageMapping("/subscribe")
+//  @SendTo("/topic/family")
+  fun getEveryone(offset: Int?): Publisher<AllPeople> {
+    val createdPersonsPublisher: Flux<AllPeople> = createdPersons.map { AllPeople(PersonDao().getAllPeople(offset), getFamily() )}
+    val initial: Flux<AllPeople> = Flux.just(AllPeople(PersonDao().getAllPeople(offset), getFamily()))
+    return initial.mergeWith(createdPersonsPublisher).map {
+      AllPeople(PersonDao().getAllPeople(offset), getFamily()) }
+
+  }
 }

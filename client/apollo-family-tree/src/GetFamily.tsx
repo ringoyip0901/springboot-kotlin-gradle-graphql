@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import { useQuery, useLazyQuery, useMutation, useSubscription } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import {useQuery, useSubscription} from '@apollo/react-hooks';
+import {gql} from 'apollo-boost';
 import CreateNewMember from './CreateNewMember'
 
 const GET_FAMILY_QUERY = gql`
@@ -17,6 +17,14 @@ const GET_FAMILY_QUERY = gql`
        }
    }
  }
+`
+
+const GET_TIMER = gql`
+    subscription getTimerSub {
+      timer {
+        x
+      }
+    }
 `
 
 // const GET_FAMILY_SUBSCRIBE = gql`
@@ -52,46 +60,43 @@ const GET_FAMILY_SUBSCRIBE = gql`
 `
 const GetFamily: React.FC = () => {
   const [variables, setVariables] = useState({ id: "pc" })
-  const { loading, error, data, subscribeToMore } = useQuery(GET_FAMILY_QUERY, {
+  const { loading, error, data } = useSubscription(GET_FAMILY_SUBSCRIBE, {
     variables: {
       offset: 1,
       after: "1"
     }
-  }) // if you want to just do a regular query reading
+  }); // if you want to just do a regular query reading
 
   // const { loading, error, data } = useSubscription(GET_FAMILY_SUBSCRIBE, {
   //   variables: {
   //       offset: 1,
   //       after: "1"
-  //   },
+  //
   //   onSubscriptionData: (subscribedData) => console.log("subscribed Data: ", subscribedData)
   // })
-  console.log(data)
+
+  // useEffect(() => subscribeToMore({
+  //   document: GET_FAMILY_SUBSCRIBE,
+  //   variables: {
+  //     offset: 1,
+  //     after: "1"
+  //   },
+  //   updateQuery: (prev: any, {subscriptionData}: any) => {
+  //     console.log("Prev: ", prev);
+  //     console.log("Sub: ", subscriptionData.data)
+  //     if (!subscriptionData.data) return prev;
+  //     return Object.assign({}, prev, {...subscriptionData.data});
+  //   }
+  // }), [])
+
   const onChange = (e: any) => {
     setVariables({
       id: e.target.value
     })
   }
 
-  const subscribeToFamily = () => {
-    return subscribeToMore({
-      document: GET_FAMILY_SUBSCRIBE,
-      variables: {
-        offset: 1,
-        after: "1"
-      },
-      updateQuery: (prev: any, {subscriptionData}: any) => {
-        console.log("Prev: ", prev);
-        console.log("Sub: ", subscriptionData.data)
-        if(!subscriptionData.data) return prev;
-        return Object.assign({}, prev, {...subscriptionData.data});
-      }
-    })
-  }
-
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error...</div>
-  subscribeToFamily()
   const renderedData = data && data.getEveryone.allPeople.edges;
   return (
     <div>
