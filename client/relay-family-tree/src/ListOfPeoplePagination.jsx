@@ -7,10 +7,6 @@ let totalCount = 1;
 
 const ListOfPeoplePagination = ({paginatedList, relay}) => {
 
-    useEffect(() => {
-        SubscribeToFamily();
-    }, []);
-
   const _loadMore = () => {
     if (!relay.hasMore () || relay.isLoading ()) {
       if (!relay.hasMore ()) {

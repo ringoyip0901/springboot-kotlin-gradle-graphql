@@ -1,4 +1,5 @@
 package com.kotlingraphqlexample.kotlingraphqlexample.resolvers
+import AllPeople
 import Edge
 import com.coxautodev.graphql.tools.GraphQLSubscriptionResolver
 import com.kotlingraphqlexample.kotlingraphqlexample.dao.PersonDao
@@ -38,14 +39,19 @@ class PersonSubscriptionResolver : GraphQLSubscriptionResolver {
         .delayElements(Duration.ofSeconds(1))
   }
 
-  // difference between create and generation - https://stackoverflow.com/questions/49951060/difference-between-flux-create-and-flux-generate
-  // generate: Programmatically create a Flux by generating signals one-by-one via a consumer callback.
-  @MessageMapping("/subscribe")
-  @SendTo("/topic/family")
+//  @MessageMapping("/subscribe")
+//  @SendTo("/topic/family")
   fun subscribeToFamily(first: Int): Publisher<Edges> {
     return Flux.create(
         Consumer<FluxSink<Edges>> { sink ->
           sink.next(getFamily())
         })
   }
+
+  @MessageMapping("/subscribe")
+  @SendTo("/topic/family")
+  fun getEveryone(offset: Int?): Publisher<AllPeople> = Flux.create(
+          Consumer<FluxSink<AllPeople>> { sink ->
+            sink.next(AllPeople(PersonDao().getAllPeople(offset), getFamily()))
+          })
 }

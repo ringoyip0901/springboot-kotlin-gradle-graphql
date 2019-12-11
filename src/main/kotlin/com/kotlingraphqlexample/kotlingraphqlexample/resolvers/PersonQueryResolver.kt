@@ -35,7 +35,7 @@ class AllPeopleQueryResolver(private val personDao: PersonDao) : GraphQLResolver
         val indexOfAfterCursor: Int = listOfEdges.indexOfFirst { it.cursor == after }
         val hasNextPage: Boolean = if (after == data.lastIndex.toString()) false else true // Relay can understand whether a refetch is necessary based on this piece of information
         val selectedListOfEdges = listOfEdges.slice(IntRange(indexOfAfterCursor, indexOfAfterCursor + first))
-        val resultEdges = Edges(selectedListOfEdges, PageInfo(hasNextPage = hasNextPage, endCursor = selectedListOfEdges.last().cursor))
+        val resultEdges = Edges(listOfEdges, PageInfo(hasNextPage = hasNextPage, endCursor = selectedListOfEdges.last().cursor))
         return resultEdges
     }
 }

@@ -9,7 +9,7 @@ import environment from './relayEnvir.ts';
 import './App.css';
 import graphql from 'babel-plugin-relay/macro';
 import ListOfPeoplePagination from './ListOfPeoplePagination.jsx';
-import NewMemberSubscription from './SubscribeToFamily.jsx'
+// import NewMemberSubscription from './SubscribeToFamily.jsx'
 import SubscribeListOfPeople from './SubscribeListOfPeople.jsx'
 
 function App () {
@@ -20,7 +20,7 @@ function App () {
             query AppQuery ($offset: Int!, $count: Int, $name: String) {
               getEveryone(offset: $offset) {
               ...ListOfPeople_list @arguments(name: $name),
-                ...ListOfPeoplePagination_paginatedList @arguments(count: $count)
+                ...ListOfPeoplePagination_paginatedList @arguments(count: $count),
               }
             }
         `}
