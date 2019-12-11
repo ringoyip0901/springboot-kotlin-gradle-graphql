@@ -27,21 +27,6 @@ const GET_TIMER = gql`
     }
 `
 
-// const GET_FAMILY_SUBSCRIBE = gql`
-//   subscription subscribeToFamily($first: Int) {
-//     subscribeToFamily(first: $first) {
-//       edges {
-//         node {
-//           id
-//           name
-//           image
-//         }
-//       }
-//     }
-//   }
-//
-// `
-
 const GET_FAMILY_SUBSCRIBE = gql`
   subscription subscribeToFamily($offset: Int, $after: String) {
     getEveryone(offset: $offset) {

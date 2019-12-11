@@ -46,7 +46,6 @@ class PersonSubscriptionResolver : GraphQLSubscriptionResolver {
   fun getEveryone(offset: Int?): Publisher<AllPeople> {
     val createdPersonsPublisher: Flux<AllPeople> = createdPersons.map { AllPeople(getFamily()) }
     val initial: Flux<AllPeople> = Flux.just(AllPeople(getFamily()))
-    return initial.mergeWith(createdPersonsPublisher).map {
-      AllPeople(getFamily()) }
+    return initial.mergeWith(createdPersonsPublisher)
   }
 }
