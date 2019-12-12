@@ -16,17 +16,18 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.FluxSink
 import reactor.core.publisher.SynchronousSink
 
+val initial: Flux<AllPeople> = Flux.just(AllPeople(getFamily()))
+
 fun getFamily(): Edges {
   val edges = Edges(data.map { person -> Edge(person.id, PersonDao().getPersonById(person.id)) }, PageInfo())
   return edges
 }
 
-data class Tick(val x: LocalDateTime)
-
 @Component
 @Controller
 class PersonSubscriptionResolver : GraphQLSubscriptionResolver {
 
+  data class Tick(val x: LocalDateTime)
   fun timer(): Publisher<Tick> {
     return Flux.generate(
         Consumer<SynchronousSink<LocalDateTime>> { sink ->
@@ -45,7 +46,6 @@ class PersonSubscriptionResolver : GraphQLSubscriptionResolver {
 
   fun getEveryone(offset: Int?): Publisher<AllPeople> {
     val createdPersonsPublisher: Flux<AllPeople> = createdPersons.map { AllPeople(getFamily()) }
-    val initial: Flux<AllPeople> = Flux.just(AllPeople(getFamily()))
     return initial.mergeWith(createdPersonsPublisher)
   }
 }

@@ -13,15 +13,15 @@ import reactor.core.publisher.FluxSink
 import java.util.function.Consumer
 
 
-val createdPersons = DirectProcessor.create<Person>()
+val createdPersons = DirectProcessor.create<String>()
+
 
 @Component
 class PersonMutationResolver(private val personDao: PersonDao) : GraphQLMutationResolver {
     fun createPerson(name: String, image: String): Edges {
-        val createdPerson = personDao.createPerson(name, image)
-        val newPerson = Person(id = Math.random().toString(), name = "PRINCE WEDNESDAY", image = image)
-        createdPersons.onNext(newPerson)
-        return createdPerson
+        val newPerson = personDao.createPerson(name, image)
+        createdPersons.onNext("")
+        return newPerson
     }
 }
 
