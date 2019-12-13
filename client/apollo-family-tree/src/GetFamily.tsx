@@ -4,7 +4,7 @@ import {gql} from 'apollo-boost';
 import CreateNewMember from './CreateNewMember'
 
 const GET_FAMILY_QUERY = gql`
- query ($offset: Int!, $after: String){
+ subscription ($offset: Int!, $after: String){
    getEveryone(offset: $offset) {
        allPeople(first: $offset, after: $after) {
            edges {
@@ -44,13 +44,20 @@ const GET_FAMILY_SUBSCRIBE = gql`
 
 `
 const GetFamily: React.FC = () => {
+    const { loading, error, data } = useSubscription(GET_FAMILY_SUBSCRIBE,  {
+        variables: {
+            offset: 1,
+            after: "1"
+        }
+    })
+    console.log(data)
   const [variables, setVariables] = useState({ id: "pc" })
-  const { loading, error, data } = useSubscription(GET_FAMILY_SUBSCRIBE, {
-    variables: {
-      offset: 1,
-      after: "1"
-    }
-  }); // if you want to just do a regular query reading
+  // const { loading, error, data } = useSubscription(GET_FAMILY_SUBSCRIBE, {
+  //   variables: {
+  //     offset: 1,
+  //     after: "1"
+  //   }
+  // }); // if you want to just do a regular query reading
 
   // const { loading, error, data } = useSubscription(GET_FAMILY_SUBSCRIBE, {
   //   variables: {

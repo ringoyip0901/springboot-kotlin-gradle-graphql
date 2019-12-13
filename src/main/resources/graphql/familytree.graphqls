@@ -5,6 +5,7 @@ schema {
 }
 
 type Query {
+    coffee: String!
     version: Version
     message: String!
     relayId: ID

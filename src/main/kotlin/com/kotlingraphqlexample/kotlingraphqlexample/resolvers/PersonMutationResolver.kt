@@ -12,9 +12,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.FluxSink
 import java.util.function.Consumer
 
-
 val createdPersons = DirectProcessor.create<String>()
-
 
 @Component
 class PersonMutationResolver(private val personDao: PersonDao) : GraphQLMutationResolver {
