@@ -5,8 +5,13 @@ import { gql } from 'apollo-boost';
 const ADD_PERSON = gql`
   mutation ($name: String!, $image: String) {
     createPerson(name: $name, image: $image) {
-      name
-      image
+        edges {
+            node {
+                id
+                name
+                image
+            }
+        }
     }
   }
 `

@@ -4,6 +4,9 @@ import {
   RecordSource,
   Store,
 } from 'relay-runtime';
+import { execute } from "apollo-link"
+import { SubscriptionClient } from 'subscriptions-transport-ws'
+import { WebSocketLink } from 'apollo-link-ws'
 
 function fetchQuery(
   operation: any,
@@ -26,8 +29,21 @@ function fetchQuery(
   })
 }
 
+
+const subscriptionClient = new SubscriptionClient('ws://localhost:8080/subscriptions', { reconnect: false });
+
+const subscriptionLink = new WebSocketLink(subscriptionClient)
+
+const networkSubscriptions: any = (operation: any, variables: any) => {
+  console.log("nextwork sub");
+  return execute(subscriptionLink, {
+    query: operation.text,
+    variables
+  })
+}
+
 const environment = new Environment({
-  network: Network.create(fetchQuery),
+  network: Network.create(fetchQuery, networkSubscriptions),
   store: new Store(new RecordSource()),
 });
 

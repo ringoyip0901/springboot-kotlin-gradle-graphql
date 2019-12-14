@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { ApolloProvider } from '@apollo/react-hooks'
-import client from "./apollo.js"
+// import client from "./apollo.js"
+import client from './apollo-envir'
 import "./App.css";
-import DataContainer from "./DataContainer";
+import GetFamily from "./GetFamily";
 
-const App: React.FC = () => {
+const App: React.FC = (): any => {
   return (
     <ApolloProvider client={client}>
       <div className="App">
         <header className="App-header">
-          <DataContainer />
+          <GetFamily />
         </header>
       </div>
     </ApolloProvider>

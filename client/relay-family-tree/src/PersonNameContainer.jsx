@@ -11,12 +11,6 @@ const PersonNameContainer = (props) => {
   )
 }
 
-// const Person = ({name, image}) => {
-//     return (
-//         <div>{name}</p><img src={image} /></div>
-//     )
-// }
-
 
 export default createFragmentContainer(
     PersonNameContainer, {

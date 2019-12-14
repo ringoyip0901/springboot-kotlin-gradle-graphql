@@ -1,4 +1,4 @@
-package com.kotlingraphqlexample.kotlingraphqlexample
+package com.kotlingraphqlexample.kotlingraphqlexample.model
 
 data class Person(
     val id: String,
