@@ -49,6 +49,6 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.register<Copy>("copyReactApp") {
-	from ("client/build")
+	from ("client/apollo-family-tree/build")
 	into("src/main/resources/static")
 }

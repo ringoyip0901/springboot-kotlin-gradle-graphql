@@ -32,4 +32,4 @@ class KotlinGraphqlExampleApplication {
 
 fun main(args: Array<String>) {
   runApplication<KotlinGraphqlExampleApplication>(*args)
-}
+} 
