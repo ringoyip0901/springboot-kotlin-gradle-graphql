@@ -9,8 +9,10 @@ import {SubscriptionClient} from 'subscriptions-transport-ws';
 
 // Create an http link:
 const httpLink = new HttpLink ({
-  uri: '/graphql',
+  uri: 'https://damp-temple-96211.herokuapp.com//graphql',
 });
+
+console.log ('environmental variables: ', process.env);
 
 // const subscriptionClient = new SubscriptionClient (
 //   'ws://localhost:8080/subscriptions',
@@ -20,7 +22,7 @@ const httpLink = new HttpLink ({
 // Create a WebSocket link:
 // const wsLink = new WebSocketLink(subscriptionClient)
 const wsLink = new WebSocketLink ({
-  uri: '/subscriptions',
+  uri: 'wss://damp-temple-96211.herokuapp.com//subscriptions',
 });
 
 // using the ability to split links, you can send data to each link
