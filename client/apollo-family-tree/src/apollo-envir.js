@@ -9,21 +9,26 @@ import {SubscriptionClient} from 'subscriptions-transport-ws';
 
 // Create an http link:
 const httpLink = new HttpLink ({
-  uri: 'https://damp-temple-96211.herokuapp.com/graphql',
+  uri: process.env.NODE_ENV === 'production'
+    ? 'https://damp-temple-96211.herokuapp.com/graphql'
+    : 'http://localhost:8080/graphql',
 });
 
-console.log ('environmental variables: ', process.env);
-
-// const subscriptionClient = new SubscriptionClient (
-//   'ws://localhost:8080/subscriptions',
-//   {reconnect: false}
-// );
-
+const subscriptionClient = new SubscriptionClient (
+  process.env.NODE_ENV === 'production'
+    ? 'wss://damp-temple-96211.herokuapp.com/subscriptions'
+    : 'ws://localhost:8080/subscriptions',
+  {
+    reconnect: true,
+  }
+);
 // Create a WebSocket link:
-// const wsLink = new WebSocketLink(subscriptionClient)
-const wsLink = new WebSocketLink ({
-  uri: 'wss://damp-temple-96211.herokuapp.com/subscriptions',
-});
+const wsLink = new WebSocketLink (subscriptionClient);
+// const wsLink = new WebSocketLink ({
+//   uri: process.env.NODE_ENV === 'production'
+//     ? 'wss://damp-temple-96211.herokuapp.com/subscriptions'
+//     : 'ws://localhost:8080/subscriptions',
+// });
 
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent
