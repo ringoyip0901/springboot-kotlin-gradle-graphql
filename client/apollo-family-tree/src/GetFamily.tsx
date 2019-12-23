@@ -67,22 +67,3 @@ const GetFamily: React.FC = () => {
 export default GetFamily;
 
 
-{/*<button onClick={() =>*/ }
-{/*    fetchMore({*/ }
-{/*        query: GET_ALL_PEOPLE,*/ }
-{/*        variables: {*/ }
-{/*            //offset: data.getAllPeople.length, //this value is the position of the array that fetchMore should start fetching from*/ }
-{/*            cursor*/ }
-{/*        },*/ }
-{/*        updateQuery: (prevResult, { fetchMoreResult }) => {*/ }
-{/*            const previous = prevResult.getAllPeople;*/ }
-{/*            const newResults = fetchMoreResult.getAllPeople;*/ }
-{/*            const newCursor = fetchMoreResult.getAllPeople.cursor;*/ }
-{/*            console.log("Previous Results: ", previous);*/ }
-{/*            console.log("New Result: ", newResults)*/ }
-{/*            return {*/ }
-{/*                getAllPeople: [...previous, ...newResults],*/ }
-{/*            }*/ }
-{/*        }*/ }
-{/*    })}>Show More Family*/ }
-{/*</button>*/ }
