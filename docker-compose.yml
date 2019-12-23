@@ -1,12 +1,15 @@
 version: "3"
 services:
-  postgres:
-    hostname: postgres
+  db:
+    image: postgres
+    restart: always
+    hostname: 172.18.0.2
     build:
       context: db
       dockerfile: config/Dockerfile.postgres
     environment:
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
@@ -16,18 +19,20 @@ services:
     build:
       context: db
       dockerfile: config/Dockerfile.migrator
-    command: -url=${JDBC_URL} -user=${DATABASE_USER} -password=${DATABASE_PASSWORD} -locations=filesystem:./migrations migrate
+    command: -url=jdbc:postgresql://db:5432/family -user=root -password=root -locations=filesystem:./migrations migrate
     volumes:
       - ./db:/host
     depends_on:
-      - postgres
+      - db
 
   seeder:
     build:
       context: db
       dockerfile: config/Dockerfile.seeder
     environment:
-      DB_URL: ${DATABASE_URL}
+      DB_URL: postgres://root:root@db:5432/family
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
     volumes:
       - ./db:/host
     depends_on:

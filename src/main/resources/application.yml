@@ -1,0 +1,11 @@
+server:
+  port: ${PORT:8080}
+
+graphql:
+  servlet:
+    enabled: true
+    corsEnabled: true
+    mapping: /graphql
+spring:
+  datasource:
+    url: jdbc:postgresql://172.18.0.2/family

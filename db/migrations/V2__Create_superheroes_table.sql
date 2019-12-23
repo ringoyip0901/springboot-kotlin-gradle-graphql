@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS superheroes (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  ability VARCHAR(100) NOT NULL
+);
