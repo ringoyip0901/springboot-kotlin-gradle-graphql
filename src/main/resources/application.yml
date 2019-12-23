@@ -8,4 +8,4 @@ graphql:
     mapping: /graphql
 spring:
   datasource:
-    url: jdbc:postgresql://172.18.0.2/family
+    url: jdbc:postgresql://db:5432/family
