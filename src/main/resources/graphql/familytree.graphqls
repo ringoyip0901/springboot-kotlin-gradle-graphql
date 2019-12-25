@@ -5,14 +5,66 @@ schema {
 }
 
 type Query {
-    coffee: String!
-    version: Version
-    message: String!
-    relayId: ID
-    getPersonById(id: ID!): Person
-    getPersonByName(name: String): Person
-    getAllPeople(offset: Int): [Person]
-    getEveryone(offset: Int): AllPeople
+    # coffee: String!
+    # getPersonById(id: ID!): Person
+    # getPersonByName(name: String): Person
+    # getAllPeople(offset: Int): [Person]
+    # getEveryone(offset: Int): AllPeople
+    allMembers(first: Int, cursor: String): MembersCollection
+} 
+
+type MembersCollection {
+    edges: [Edge]
+    pageInfo: PageInfo!
+    totalCount: Int
+}
+
+type Edges {
+    edges: [Edge]
+    pageInfo: PageInfo
+}
+
+type Edge {
+    cursor: String
+    node: Member
+}
+
+type PageInfo {
+    hasNextPage: Boolean
+    hasPreviousPage: Boolean
+    startCursor: String
+    endCursor: String
+}
+
+interface Member {
+    id: String!,
+    name: String!
+    image: String
+}
+
+type Person implements Member {
+    id: String!
+    name: String!
+    image: String
+    title: String
+}
+
+type Hero implements Member {
+    id: String!
+    name: String!
+    image: String
+    ability: String
+}
+
+enum ABILITY {
+    WEATHER_CONTROL
+    SUPER_STRENGTH
+    REGENERATION
+}
+
+type Ability {
+    power: ABILITY
+    description: String
 }
 
 type Mutation {
@@ -29,42 +81,7 @@ type Tick {
     x: String
 }
 
-type Version {
-    current: String
-    previous: String
-}
-
 type AllPeople {
     allPeople(name: String, image: String, first: Int, after: String): Edges
-}
-
-type Edges {
-    edges: [Edge]
-    pageInfo: PageInfo
-}
-
-type Edge {
-    cursor: String
-    node: Person
-}
-
- type PageInfo {
-     hasNextPage: Boolean
-     hasPreviousPage: Boolean,
-     startCursor: String,
-     endCursor: String
- }
-
-type Person {
-    id: String!,
-    name: String!,
-    image: String,
-    relationships(type: String): [Relationship]!
-}
-
-type Relationship {
-    from: Person!
-    to: Person!
-    relationship: String!
 }
 

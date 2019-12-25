@@ -7,7 +7,6 @@ import com.kotlingraphqlexample.kotlingraphqlexample.dao.PersonDao
 import com.kotlingraphqlexample.kotlingraphqlexample.data.data
 import com.kotlingraphqlexample.kotlingraphqlexample.model.Edges
 import com.kotlingraphqlexample.kotlingraphqlexample.model.PageInfo
-import com.kotlingraphqlexample.kotlingraphqlexample.model.Person
 import org.springframework.stereotype.Component
 
 val edges = Edges(data.map { person -> Edge(person.id, PersonDao().getPersonById(person.id)) }, PageInfo())
@@ -29,5 +28,11 @@ class AllPeopleQueryResolver(private val personDao: PersonDao) : GraphQLResolver
         val selectedListOfEdges = listOfEdges.slice(IntRange(indexOfAfterCursor, indexOfAfterCursor + first))
         val resultEdges = Edges(listOfEdges, PageInfo(hasNextPage = hasNextPage, endCursor = selectedListOfEdges.last().cursor))
         return resultEdges
+    }
+}
+
+@Component
+class AllMemberResolver() : GraphQLQueryResolver<MemberCollection> {
+    fun allMember(first: Int, after: String) {
     }
 }

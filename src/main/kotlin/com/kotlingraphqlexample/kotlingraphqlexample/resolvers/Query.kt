@@ -5,9 +5,6 @@ import org.springframework.stereotype.Component
 data class Version(val current: String, val previous: String)
 
 @Component
-class Query: GraphQLQueryResolver {
+class Query : GraphQLQueryResolver {
     fun coffee(): String = "Coffeeeee"
-    fun version(): Version = Version("1.0.1", "1.0.0")
-    fun message(): String = "Hey there from Query class"
-    fun relayId(): Int = 1
 }
