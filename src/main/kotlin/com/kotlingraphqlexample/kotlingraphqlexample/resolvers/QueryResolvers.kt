@@ -41,7 +41,6 @@ class QueryResolvers() : GraphQLQueryResolver {
 
 
 
-
 //val edges = Edges(data.map { person -> Edge(person.id, PersonDao().getPersonById(person.id)) }, PageInfo())
 // just an example for using GraphQLQueryResolver, which is used to retrieve the root fields
 //@Component
