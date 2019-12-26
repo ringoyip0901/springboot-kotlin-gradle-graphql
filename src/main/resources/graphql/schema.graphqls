@@ -1,0 +1,94 @@
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
+
+enum TYPE {
+    ROYALTIES
+    HEROES
+}
+
+enum TITLE {
+    QUEEN,
+    KING,
+    PRINCE,
+    PRINCESS,
+}
+
+# used by the Royalty type and the Hero type
+interface Person {
+    id: String!
+    name: String
+    image: String
+}
+
+type Query {
+     allPeople(first: Int, cursor: String, type: TYPE): PeopleCollection
+} 
+
+type PeopleCollection {
+    edges: [Edge]
+    pageInfo: PageInfo!
+    totalCount: Int
+}
+
+type Edge {
+    cursor: String
+    node: Person
+}
+#
+type PageInfo {
+    hasNextPage: Boolean
+    hasPreviousPage: Boolean
+    startCursor: String
+    endCursor: String
+}
+
+type Royalty implements Person {
+    id: String!
+    name: String!
+    image: String
+    title: TITLE
+}
+
+type Hero implements Person {
+    id: String!
+    name: String!
+    image: String
+    ability: String
+}
+
+type Mutation {
+    createPerson(input: CreatePersonInput): MutationPayload
+}
+
+input CreatePersonInput {
+    type: TYPE
+    name: String
+    image: String
+    title: TITLE
+    ability: String
+}
+
+type MutationPayload {
+    result: Edge
+    error: String
+}
+
+#type Subscription {
+#    timer: Tick
+#    subscribeToFamily(first: Int): Edges
+#    getEveryone(offset: Int): AllPeople
+#}
+#
+type Subscription {
+    timer: Tick
+    subscribeToPeople(first: Int, cursor: String, type: TYPE): PeopleCollection
+}
+
+type Tick {
+    time: String
+}
+
+
