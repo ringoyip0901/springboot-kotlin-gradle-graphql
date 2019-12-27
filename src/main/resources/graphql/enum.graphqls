@@ -1,0 +1,11 @@
+enum TYPE {
+    ROYALTIES
+    HEROES
+}
+
+enum TITLE {
+    QUEEN,
+    KING,
+    PRINCE,
+    PRINCESS,
+}

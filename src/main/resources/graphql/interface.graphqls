@@ -1,0 +1,6 @@
+# used by the Royalty type and the Hero type
+interface Person {
+    id: String!
+    name: String
+    image: String
+}

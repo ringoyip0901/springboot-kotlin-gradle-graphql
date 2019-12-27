@@ -1,0 +1,38 @@
+type Query {
+     allPeople(first: Int, cursor: String, type: TYPE): PeopleCollection
+} 
+
+type PeopleCollection {
+    edges: [Edge]
+    pageInfo: PageInfo!
+    totalCount: Int
+}
+
+type Edge {
+    cursor: String
+    node: Person
+}
+
+type PageInfo {
+    hasNextPage: Boolean
+    hasPreviousPage: Boolean
+    startCursor: String
+    endCursor: String
+}
+
+type Royalty implements Person {
+    id: String!
+    name: String!
+    image: String
+    title: TITLE
+}
+
+type Hero implements Person {
+    id: String!
+    name: String!
+    image: String
+    ability: String
+}
+
+
+

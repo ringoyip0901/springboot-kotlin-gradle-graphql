@@ -1,6 +1,11 @@
-TRUNCATE TABLE family RESTART IDENTITY CASCADE;
+TRUNCATE TABLE postgres RESTART IDENTITY CASCADE;
 
-INSERT INTO family (name, age)
+INSERT INTO family (name, title)
 VALUES
-  ('Queen Elizabeth', 78),
-  ('Prince Harry', 45);
+  ('Queen Elizabeth', "Queen"),
+  ('Prince Harry', "Prince");
+
+INSERT INTO superheroes (name, ability)
+VALUES
+  ('Storm', "Weather Control"),
+  ('Wolverine', "Regeneration");

@@ -1,0 +1,16 @@
+type Mutation {
+    createPerson(input: CreatePersonInput): MutationPayload
+}
+
+input CreatePersonInput {
+    type: TYPE
+    name: String
+    image: String
+    title: TITLE
+    ability: String
+}
+
+type MutationPayload {
+    result: Edge
+    error: String
+}

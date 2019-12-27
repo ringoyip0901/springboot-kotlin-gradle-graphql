@@ -1,0 +1,14 @@
+#type Subscription {
+#    timer: Tick
+#    subscribeToFamily(first: Int): Edges
+#    getEveryone(offset: Int): AllPeople
+#}
+#
+type Subscription {
+    timer: Tick
+    subscribeToPeople(first: Int, cursor: String, type: TYPE): PeopleCollection
+}
+
+type Tick {
+    time: String
+}
