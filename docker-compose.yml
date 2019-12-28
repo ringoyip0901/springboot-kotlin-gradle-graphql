@@ -19,7 +19,7 @@ services:
     build:
       context: db
       dockerfile: config/Dockerfile.migrator
-    command: -url=jdbc:postgresql://db:5432/family -user=root -password=root -locations=filesystem:./migrations migrate
+    command: -url=jdbc:postgresql://db:5432/postgres -user=root -password=root -locations=filesystem:./migrations migrate
     volumes:
       - ./db:/host
     depends_on:
@@ -30,7 +30,7 @@ services:
       context: db
       dockerfile: config/Dockerfile.seeder
     environment:
-      DB_URL: postgres://root:root@db:5432/family
+      DB_URL: postgres://root:root@db:5432/postgres
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
     volumes:

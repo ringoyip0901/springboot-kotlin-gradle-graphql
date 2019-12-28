@@ -1,6 +1,6 @@
 set -e
 
-createdb family
+createdb postgres
 
 cp postgresql.conf /var/lib/postgresql/data/postgresql.conf
 
