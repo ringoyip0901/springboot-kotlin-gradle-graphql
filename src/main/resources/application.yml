@@ -6,6 +6,14 @@ graphql:
     enabled: true
     corsEnabled: true
     mapping: /graphql
-#spring:
-#  datasource:
-#    url: jdbc:postgresql://db:5432/family
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/postgres
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect

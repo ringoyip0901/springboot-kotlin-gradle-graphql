@@ -4,6 +4,8 @@ import com.coxautodev.graphql.tools.GraphQLQueryResolver
 import com.coxautodev.graphql.tools.SchemaParserDictionary
 import com.kotlingraphqlexample.kotlingraphqlexample.data.*
 import com.kotlingraphqlexample.kotlingraphqlexample.model.*
+import com.kotlingraphqlexample.kotlingraphqlexample.repositories.RoyaltyRepo
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 
@@ -12,8 +14,8 @@ import org.springframework.stereotype.Component
  * @description only offset pagination has been "partially" implemented.
  */
 fun createCollection(first: Int, cursor: String, type: TYPE): PeopleCollection {
-//  val people = if (type == TYPE.ROYALTIES) { royalties.slice(IntRange(0, first - 1)) } else { heroes.slice(IntRange(0, first - 1)) }
-  val people = if (type == TYPE.ROYALTIES) { royalties } else { heroes }
+
+  val people = if (type == TYPE.ROYALTIES) { royalties.slice(IntRange(0, first - 1)) } else { heroes.slice(IntRange(0, first - 1)) }
   return PeopleCollection(
       people.map { person -> Edge(person.id, person)},
       pageInfo = PageInfo(), //set to default for now
@@ -23,7 +25,12 @@ fun createCollection(first: Int, cursor: String, type: TYPE): PeopleCollection {
 
 @Component
 class QueryResolvers() : GraphQLQueryResolver {
+  @Autowired
+  lateinit var royaltyRepo: RoyaltyRepo;
+
   fun allPeople(first: Int, cursor: String, type: TYPE): PeopleCollection {
+    val allRoyalties = royaltyRepo.findAll();
+    println("Royalties: " + allRoyalties);
     return createCollection(first, cursor, type)
   }
   /**
