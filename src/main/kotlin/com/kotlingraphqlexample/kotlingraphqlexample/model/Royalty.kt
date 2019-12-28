@@ -1,8 +1,7 @@
 package com.kotlingraphqlexample.kotlingraphqlexample.model
 
 import javax.persistence.*
-import javax.persistence.Entity
-import javax.persistence.Table
+
 
 @Entity
 @Table(name = "family")
@@ -12,5 +11,26 @@ data class Royalty(
     override val name: String,
     override val image: String,
     val title: TITLE?
-): Person
+): Person {}
 
+
+//@Entity
+//class  {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    var id: Long? = null
+//    var name: String? = null
+//
+//    constructor() {}
+//    constructor(name: String?) {
+//        this.name = name
+//    }
+//
+//    override fun toString(): String {
+//        return "Book{" +
+//            "id=" + id +
+//            ", name='" + name + '\'' +
+//            '}'
+//    }
+//
+//}

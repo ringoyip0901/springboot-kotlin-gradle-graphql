@@ -5,6 +5,7 @@ import com.coxautodev.graphql.tools.SchemaParserDictionary
 import com.kotlingraphqlexample.kotlingraphqlexample.data.*
 import com.kotlingraphqlexample.kotlingraphqlexample.model.*
 import com.kotlingraphqlexample.kotlingraphqlexample.repositories.RoyaltyRepo
+//import com.kotlingraphqlexample.kotlingraphqlexample.repositories.RoyaltyRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
@@ -29,8 +30,9 @@ class QueryResolvers() : GraphQLQueryResolver {
   lateinit var royaltyRepo: RoyaltyRepo;
 
   fun allPeople(first: Int, cursor: String, type: TYPE): PeopleCollection {
-    val allRoyalties = royaltyRepo.findAll();
-    println("Royalties: " + allRoyalties);
+    val listOfRoyal = royaltyRepo.findAll();
+    royaltyRepo.save(Royalty(id = "1231231", name = "new queen", image = "jpg", title = TITLE.QUEEN))
+    println("Family: " + listOfRoyal);
     return createCollection(first, cursor, type)
   }
   /**

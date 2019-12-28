@@ -10,4 +10,4 @@ data class Hero(
     override  val name: String,
     override val image: String,
     val ability: String?
-): Person
+): Person {}

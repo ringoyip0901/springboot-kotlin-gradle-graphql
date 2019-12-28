@@ -1,13 +1,7 @@
-server:
-  port: ${PORT:8080}
-
-graphql:
-  servlet:
-    enabled: true
-    corsEnabled: true
-    mapping: /graphql
 spring:
+  profiles: db
   datasource:
+    driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://db:5432/postgres
     username: root
     password: root
@@ -16,4 +10,16 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
+        ddl-auto: none
         dialect: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+
+server:
+  port: ${PORT:8080}
+  address: 0.0.0.0 # Bind all
+
+graphql:
+  servlet:
+    enabled: true
+    corsEnabled: true
+    mapping: /graphql

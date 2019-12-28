@@ -20,6 +20,9 @@ services:
       context: db
       dockerfile: config/Dockerfile.migrator
     command: -url=jdbc:postgresql://db:5432/postgres -user=root -password=root -locations=filesystem:./migrations migrate
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
     volumes:
       - ./db:/host
     depends_on:
@@ -31,8 +34,9 @@ services:
       dockerfile: config/Dockerfile.seeder
     environment:
       DB_URL: postgres://root:root@db:5432/postgres
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_HOST: "db:5432"
     volumes:
       - ./db:/host
     depends_on:
