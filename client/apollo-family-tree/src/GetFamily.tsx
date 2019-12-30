@@ -1,62 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useQuery, useSubscription } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import CreateNewMember from './CreateNewMember'
+import { GET_FAMILY_QUERY } from './queries/Query/getFamilyQuery'
+import { GET_FAMILY_SUBSCRIBE } from './queries/Subscriptions/getFamilySubscriptions'
 
-const GET_FAMILY_QUERY = gql`
- query ($offset: Int!, $after: String){
-   getEveryone(offset: $offset) {
-       allPeople(first: $offset, after: $after) {
-           edges {
-             node {
-               id
-               name
-               image
-             }
-           }
-       }
-   }
- }
-`
+interface Node {
+    id: number
+    name: string
+}
 
-const GET_TIMER = gql`
-    subscription getTimerSub {
-      timer {
-        x
-      }
-    }
-`
+interface GetFamilyQueryEdges {
+    edges: Node[]
+}
 
-const GET_FAMILY_SUBSCRIBE = gql`
-  subscription subscribeToFamily($offset: Int, $after: String) {
-    getEveryone(offset: $offset) {
-        allPeople(first: $offset, after: $after) {
-          edges {
-            node {
-              id
-              name
-              image
-            }
-          }
-        }
-    }
-  }
+interface GetFamilyQueryData {
+    allPeople: GetFamilyQueryEdges;
+}
 
-`
+interface GetFamilyVars {
+    first: number,
+    cursor: string,
+    type: TYPE
+}
+
+enum TYPE {
+    HEROES = "Heroes",
+    ROYALTIES = "Royalties"
+}
+
 const GetFamily: React.FC = () => {
-  const { loading, error, data } = useSubscription(GET_FAMILY_SUBSCRIBE, {
+  const { loading, error, data } = useQuery<GetFamilyQueryData, GetFamilyVars>(GET_FAMILY_QUERY, {
     variables: {
-      offset: 1,
-      after: "1"
+      first: 4,
+      cursor: "random",
+      type: TYPE.ROYALTIES
     }
   })
-
+  console.log(data)
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error...</div>
-  const renderedData = data && data.getEveryone.allPeople.edges;
+  const renderedData = data && data.allPeople.edges;
   return (
     <div>
-      {renderedData.map((node: any, i: number) =>
+      {renderedData && renderedData.map((node: any, i: number) =>
         <div key={i}><p key={i}>{node.node.name}</p><img src={node.node.image} /></div>
       )}
       <CreateNewMember />

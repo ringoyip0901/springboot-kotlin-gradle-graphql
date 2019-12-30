@@ -1,20 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
-
-const ADD_PERSON = gql`
-  mutation ($name: String!, $image: String) {
-    createPerson(name: $name, image: $image) {
-        edges {
-            node {
-                id
-                name
-                image
-            }
-        }
-    }
-  }
-`
+import {ADD_PERSON} from './queries/Mutations/addPerson'
 
 const CreateNewMember: React.FC = () => {
   let image: any;
