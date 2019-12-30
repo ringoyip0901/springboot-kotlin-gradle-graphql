@@ -3,7 +3,7 @@ type Mutation {
 }
 
 input CreatePersonInput {
-    type: TYPE
+    type: String
     name: String
     image: String
     title: TITLE

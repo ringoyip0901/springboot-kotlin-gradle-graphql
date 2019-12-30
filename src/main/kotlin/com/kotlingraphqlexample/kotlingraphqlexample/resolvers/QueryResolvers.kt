@@ -13,8 +13,8 @@ import java.util.*
  * @description cursor pagination has not been implemmented yet.
  * @description only offset pagination has been "partially" implemented.
  */
-fun createCollection(first: Int, cursor: String, type: Type): PeopleCollection {
-  val people = if (type == Type.ROYALTIES) { ROYALTIES } else { HEROES }
+fun createCollection(first: Int, cursor: String, type: String): PeopleCollection {
+  val people = if (type == "Royalties") { ROYALTIES } else { HEROES }
 //  val people = if (type == Type.ROYALTIES) { ROYALTIES.slice(IntRange(0, first - 1)) } else { HEROES.slice(IntRange(0, first - 1)) }
   return PeopleCollection(
       people.map { person -> Edge(person.id, person)},
@@ -30,7 +30,7 @@ class QueryResolvers() : GraphQLQueryResolver {
     return Sample(id = UUID.randomUUID().toString(), name = "sample name")
   }
 
-  fun allPeople(first: Int, cursor: String, type: Type): PeopleCollection {
+  fun allPeople(first: Int, cursor: String, type: String): PeopleCollection {
     return createCollection(first, cursor, type)
   }
   /**

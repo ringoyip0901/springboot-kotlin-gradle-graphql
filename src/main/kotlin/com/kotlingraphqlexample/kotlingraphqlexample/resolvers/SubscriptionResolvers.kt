@@ -13,14 +13,13 @@ import reactor.core.publisher.SynchronousSink
 
 data class Tick(val time: LocalDateTime)
 
-fun initialCollection(first: Int, cursor: String, type: Type): Flux<PeopleCollection> {
+fun initialCollection(first: Int, cursor: String, type: String): Flux<PeopleCollection> {
   val initial: Flux<PeopleCollection> = Flux.just(createCollection(first, cursor, type))
   return initial;
 }
 
 @Component
 class SubscriptionResolvers : GraphQLSubscriptionResolver {
-;
   data class Tick(val time: LocalDateTime)
   fun timer(): Publisher<Tick> {
     return Flux.generate(
@@ -31,7 +30,7 @@ class SubscriptionResolvers : GraphQLSubscriptionResolver {
         .delayElements(Duration.ofSeconds(1))
   }
 
-  fun subscribeToPeople(first: Int, cursor: String, type: Type): Publisher<PeopleCollection> {
+  fun subscribeToPeople(first: Int, cursor: String, type: String): Publisher<PeopleCollection> {
     val newPeopleCollectionPub: Flux<PeopleCollection> = streamOfSubscriptions.map { createCollection(first, cursor, type)}
     return initialCollection(first, cursor, type).mergeWith(newPeopleCollectionPub)
   }

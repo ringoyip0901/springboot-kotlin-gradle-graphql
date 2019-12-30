@@ -1,6 +1,6 @@
 type Subscription {
     timer: Tick
-    subscribeToPeople(first: Int, cursor: String, type: TYPE): PeopleCollection
+    subscribeToPeople(first: Int, cursor: String, type: String): PeopleCollection
 }
 
 type Tick {

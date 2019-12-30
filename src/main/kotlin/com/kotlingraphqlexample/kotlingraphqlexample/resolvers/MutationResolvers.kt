@@ -19,14 +19,14 @@ class MutationResolvers: GraphQLMutationResolver {
    * @return MutationPayload - best practice to include error payload to deliver a sensible error message to the client
    */
   fun createPerson(input: CreatePersonInput): MutationPayload {
-    if (input.type == Type.ROYALTIES && input.title != null) {
+    if (input.type == "Royalties" && input.title != null) {
       val newRoyalty = Royalty(id = generateUniqueId(), name = input.name, image = input.image, title = input.title)
       ROYALTIES.add(newRoyalty)
       val newEdge = Edge(cursor = newRoyalty.id, node = newRoyalty)
       streamOfSubscriptions.onNext("")
       return MutationPayload(result = newEdge, error = "No Error")
     }
-    else if (input.type == Type.HEROES && input.ability != null) {
+    else if (input.type == "Heroes" && input.ability != null) {
       val newHero = Hero(id = generateUniqueId(), name = input.name, image = input.image, ability = input.ability)
       HEROES.add(newHero)
       val newEdge = Edge(cursor = newHero.id, node = newHero)

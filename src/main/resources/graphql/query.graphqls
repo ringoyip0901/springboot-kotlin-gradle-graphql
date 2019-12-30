@@ -3,7 +3,7 @@ directive @deprecated(
 ) on FIELD_DEFINITION | ENUM_VALUE
 
 type Query {
-     allPeople(first: Int, cursor: String, type: TYPE): PeopleCollection
+    allPeople(first: Int, cursor: String, type: String): PeopleCollection
     sample: Sample
 } 
 
