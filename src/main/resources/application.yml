@@ -2,12 +2,16 @@ spring:
   profiles: db
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://db:5432/postgres
+    initialization-mode: always
+    platform: postgres
+    url: jdbc:postgresql://172.18.0.2:5432/postgres
     username: root
     password: root
   jpa:
+    generate:
+      ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         ddl-auto: none

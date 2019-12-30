@@ -4,35 +4,33 @@ import com.coxautodev.graphql.tools.GraphQLQueryResolver
 import com.coxautodev.graphql.tools.SchemaParserDictionary
 import com.kotlingraphqlexample.kotlingraphqlexample.data.*
 import com.kotlingraphqlexample.kotlingraphqlexample.model.*
-import com.kotlingraphqlexample.kotlingraphqlexample.repositories.RoyaltyRepo
 //import com.kotlingraphqlexample.kotlingraphqlexample.repositories.RoyaltyRepo
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
+import java.util.*
 
 /**
  * @description cursor pagination has not been implemmented yet.
  * @description only offset pagination has been "partially" implemented.
  */
-fun createCollection(first: Int, cursor: String, type: TYPE): PeopleCollection {
-
-  val people = if (type == TYPE.ROYALTIES) { royalties.slice(IntRange(0, first - 1)) } else { heroes.slice(IntRange(0, first - 1)) }
+fun createCollection(first: Int, cursor: String, type: Type): PeopleCollection {
+  val people = if (type == Type.ROYALTIES) { ROYALTIES } else { HEROES }
+//  val people = if (type == Type.ROYALTIES) { ROYALTIES.slice(IntRange(0, first - 1)) } else { HEROES.slice(IntRange(0, first - 1)) }
   return PeopleCollection(
       people.map { person -> Edge(person.id, person)},
       pageInfo = PageInfo(), //set to default for now
-      totalCount = royalties.size
+      totalCount = people.size
   );
 }
 
 @Component
 class QueryResolvers() : GraphQLQueryResolver {
-  @Autowired
-  lateinit var royaltyRepo: RoyaltyRepo;
 
-  fun allPeople(first: Int, cursor: String, type: TYPE): PeopleCollection {
-    val listOfRoyal = royaltyRepo.findAll();
-    royaltyRepo.save(Royalty(id = "1231231", name = "new queen", image = "jpg", title = TITLE.QUEEN))
-    println("Family: " + listOfRoyal);
+  fun sample(): Sample {
+    return Sample(id = UUID.randomUUID().toString(), name = "sample name")
+  }
+
+  fun allPeople(first: Int, cursor: String, type: Type): PeopleCollection {
     return createCollection(first, cursor, type)
   }
   /**

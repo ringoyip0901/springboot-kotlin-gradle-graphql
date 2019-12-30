@@ -1,5 +1,10 @@
+directive @deprecated(
+    reason: String = "No longer supported"
+) on FIELD_DEFINITION | ENUM_VALUE
+
 type Query {
      allPeople(first: Int, cursor: String, type: TYPE): PeopleCollection
+    sample: Sample
 } 
 
 type PeopleCollection {
@@ -21,18 +26,22 @@ type PageInfo {
 }
 
 type Royalty implements Person {
-    id: String!
+    id: ID!
     name: String!
     image: String
-    title: TITLE
+    title: TITLE @deprecated #just an example to show how to use directives
 }
 
 type Hero implements Person {
-    id: String!
+    id: ID!
     name: String!
     image: String
     ability: String
 }
 
+type Sample implements SampleInterface {
+    id: ID!
+    name: String
+}
 
 

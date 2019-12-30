@@ -3,6 +3,7 @@ services:
   db:
     image: postgres
     restart: always
+#    hostname: 127.0.0.1
     hostname: 172.18.0.2
     build:
       context: db

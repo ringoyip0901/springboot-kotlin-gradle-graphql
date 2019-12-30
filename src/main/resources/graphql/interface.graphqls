@@ -1,6 +1,10 @@
 # used by the Royalty type and the Hero type
 interface Person {
-    id: String!
+    id: ID!
     name: String
     image: String
+}
+
+interface SampleInterface {
+    id: ID!
 }

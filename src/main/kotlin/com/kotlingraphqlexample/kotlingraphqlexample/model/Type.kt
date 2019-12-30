@@ -1,6 +1,6 @@
 package com.kotlingraphqlexample.kotlingraphqlexample.model
 
-enum class TYPE (val type: String) {
+enum class Type (val type: String) {
   ROYALTIES("Royalties"),
   HEROES("Heroes")
 }

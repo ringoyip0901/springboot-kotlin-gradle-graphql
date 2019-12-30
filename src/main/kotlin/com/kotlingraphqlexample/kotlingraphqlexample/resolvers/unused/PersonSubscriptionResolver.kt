@@ -1,3 +1,5 @@
+package com.kotlingraphqlexample.kotlingraphqlexample.resolvers.unused
+
 //package com.kotlingraphqlexample.kotlingraphqlexample.resolvers
 //import AllPeople
 //import Edge

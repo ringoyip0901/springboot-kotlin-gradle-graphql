@@ -6,8 +6,10 @@ import javax.persistence.*
 @Table(name = "superheroes")
 data class Hero(
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    override val id: String,
+    override val id: String = "0",
     override  val name: String,
     override val image: String,
     val ability: String?
-): Person {}
+): Person {
+    private constructor(): this("", "", "", "")
+}

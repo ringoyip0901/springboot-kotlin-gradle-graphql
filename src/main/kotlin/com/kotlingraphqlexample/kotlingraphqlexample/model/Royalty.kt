@@ -7,30 +7,14 @@ import javax.persistence.*
 @Table(name = "family")
 data class Royalty(
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    override val id: String,
+    override val id: String = "0",
     override val name: String,
+    @Column(name = "image")
     override val image: String,
-    val title: TITLE?
-): Person {}
+    @Column(name = "title")
+    val title: Title?
+): Person {
+    private constructor(): this("", "", "", Title.QUEEN)
+}
 
 
-//@Entity
-//class  {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    var id: Long? = null
-//    var name: String? = null
-//
-//    constructor() {}
-//    constructor(name: String?) {
-//        this.name = name
-//    }
-//
-//    override fun toString(): String {
-//        return "Book{" +
-//            "id=" + id +
-//            ", name='" + name + '\'' +
-//            '}'
-//    }
-//
-//}

@@ -8,5 +8,5 @@ import javax.transaction.Transactional
 @Repository
 @Transactional
 interface RoyaltyRepo: JpaRepository<Royalty, Long> {
-  override fun findAll(): MutableList<Royalty>
+//  override fun findAll(): MutableList<Royalty>
 }
