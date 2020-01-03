@@ -24,8 +24,8 @@ val ROYALTIES: MutableList<Royalty> = mutableListOf(
 )
 
 val HEROES: MutableList<Hero> = mutableListOf(
-    Hero(id = generateUniqueId(), name = "Storm", image = "image", ability = "Weather Control"),
-    Hero(id = generateUniqueId(), name = "Wolverine", image = "image", ability = "Regeneration"),
-    Hero(id = generateUniqueId(), name = "Phoenix", image = "image", ability = "Telepathy"),
-    Hero(id = generateUniqueId(), name = "Magneto", image = "image", ability = "Metal")
+    Hero(id = generateUniqueId(), name = "Storm", image = "https://am23.akamaized.net/tms/cnt/uploads/2019/10/Storm-Xmen-can-we-get-her-color-right.jpg", ability = "Weather Control"),
+    Hero(id = generateUniqueId(), name = "Wolverine", image = "https://img1.looper.com/img/gallery/x-men-wont-join-the-mcu-for-a-very-long-time-says-kevin-feige/intro-1554831333.jpg", ability = "Regeneration"),
+    Hero(id = generateUniqueId(), name = "Phoenix", image = "https://static0.srcdn.com/wordpress/wp-content/uploads/2017/08/Dark-Phoenix-defeated-Wolverine.jpg?q=50&fit=crop&w=960&h=500&dpr=1.5", ability = "Telepathy"),
+    Hero(id = generateUniqueId(), name = "Magneto", image = "https://cdn.images.express.co.uk/img/dynamic/36/590x/secondary/Marvel-bombshell-Will-Denzel-Washington-play-Magneto-in-new-X-Men-2068143.webp?r=1568983260991", ability = "Metal")
 )

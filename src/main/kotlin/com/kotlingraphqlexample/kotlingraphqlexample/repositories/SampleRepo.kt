@@ -9,7 +9,5 @@ import javax.transaction.Transactional
 @Transactional
 interface SampleRepo: JpaRepository<Sample, Long> {
   override fun findAll(): MutableList<Sample>
-  override fun <S : Sample?> saveAndFlush(entity: S): S {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
+  override fun <S : Sample?> save(entity: S): S
 }

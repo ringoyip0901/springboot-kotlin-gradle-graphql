@@ -8,7 +8,7 @@ data class Sample (
     @Column(name = "name")
     val name: String,
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: String = "0"
+    val id: Long = -1
 ){
   private constructor(): this("")
 }
