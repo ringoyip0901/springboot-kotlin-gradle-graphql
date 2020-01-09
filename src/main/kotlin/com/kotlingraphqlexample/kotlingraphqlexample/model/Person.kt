@@ -1,7 +1,11 @@
 package com.kotlingraphqlexample.kotlingraphqlexample.model
 
-data class Person(
-    val id: String,
-    val name: String,
-    val image: String? = null
-)
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+
+interface Person {
+  val id: String
+  val name: String
+  val image: String
+}

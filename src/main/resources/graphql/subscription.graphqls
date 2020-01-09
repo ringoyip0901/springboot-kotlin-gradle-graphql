@@ -1,0 +1,8 @@
+type Subscription {
+    timer: Tick
+    subscribeToPeople(first: Int, cursor: String, type: String): PeopleCollection
+}
+
+type Tick {
+    time: String
+}

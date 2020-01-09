@@ -1,0 +1,47 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    restart: always
+#    hostname: 127.0.0.1
+    hostname: 172.18.0.2
+    build:
+      context: db
+      dockerfile: config/Dockerfile.postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  migrator:
+    build:
+      context: db
+      dockerfile: config/Dockerfile.migrator
+    command: -url=jdbc:postgresql://db:5432/postgres -user=root -password=root -locations=filesystem:./migrations migrate
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - ./db:/host
+    depends_on:
+      - db
+
+  seeder:
+    build:
+      context: db
+      dockerfile: config/Dockerfile.seeder
+    environment:
+      DB_URL: postgres://root:root@db:5432/postgres
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_HOST: "db:5432"
+    volumes:
+      - ./db:/host
+    depends_on:
+      - migrator
+
+volumes:
+  pgdata:
