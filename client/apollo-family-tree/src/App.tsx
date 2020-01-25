@@ -5,7 +5,7 @@ import client from './apollo-envir'
 import "./App.css";
 import GetFamily from "./GetFamily";
 
-//hi
+//reset it
 
 const App: React.FC = (): any => {
   return (
@@ -19,4 +19,4 @@ const App: React.FC = (): any => {
   )
 }
 
-export default App;
+export default App
