@@ -1,15 +1,12 @@
 package com.kotlingraphqlexample.kotlingraphqlexample.resolvers
 import Edge
 import com.coxautodev.graphql.tools.GraphQLQueryResolver
-import com.coxautodev.graphql.tools.SchemaParser
 import com.coxautodev.graphql.tools.SchemaParserDictionary
 import com.kotlingraphqlexample.kotlingraphqlexample.data.*
 import com.kotlingraphqlexample.kotlingraphqlexample.model.*
-import graphql.schema.GraphQLSchema
 //import com.kotlingraphqlexample.kotlingraphqlexample.repositories.RoyaltyRepo
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
-import java.util.*
 
 /**
  * @description cursor pagination has not been implemmented yet.

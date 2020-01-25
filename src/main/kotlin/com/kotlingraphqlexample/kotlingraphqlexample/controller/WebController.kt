@@ -12,9 +12,7 @@ class WebController {
   @Autowired
   lateinit var sampleRepo: SampleRepo;
   @GetMapping("/save")
-  fun saveAction(): MutableList<Sample> {
-    sampleRepo.save(Sample("sample"))
-    val all = sampleRepo.findAll();
-    return all;
+  fun saveAction(): Sample {
+    return sampleRepo.save(Sample("sample"));
   }
 }

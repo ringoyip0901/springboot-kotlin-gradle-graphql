@@ -8,6 +8,6 @@ import javax.transaction.Transactional
 @Repository
 @Transactional
 interface SampleRepo: JpaRepository<Sample, Long> {
-  override fun findAll(): MutableList<Sample>
-  override fun <S : Sample?> save(entity: S): S
+//  override fun findAll(): MutableList<Sample>
+//  override fun <S : Sample?> save(entity: S): S
 }

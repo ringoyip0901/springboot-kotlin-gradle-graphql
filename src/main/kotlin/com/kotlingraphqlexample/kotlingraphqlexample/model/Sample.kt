@@ -3,9 +3,7 @@ package com.kotlingraphqlexample.kotlingraphqlexample.model
 import javax.persistence.*
 
 @Entity
-@Table(name = "sample")
-data class Sample (
-    @Column(name = "name")
+data class Sample(
     val name: String,
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long = -1
