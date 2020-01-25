@@ -1,9 +1,11 @@
 package com.kotlingraphqlexample.kotlingraphqlexample.resolvers
 import Edge
 import com.coxautodev.graphql.tools.GraphQLQueryResolver
+import com.coxautodev.graphql.tools.SchemaParser
 import com.coxautodev.graphql.tools.SchemaParserDictionary
 import com.kotlingraphqlexample.kotlingraphqlexample.data.*
 import com.kotlingraphqlexample.kotlingraphqlexample.model.*
+import graphql.schema.GraphQLSchema
 //import com.kotlingraphqlexample.kotlingraphqlexample.repositories.RoyaltyRepo
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
@@ -11,7 +13,6 @@ import java.util.*
 
 /**
  * @description cursor pagination has not been implemmented yet.
- * @description only offset pagination has been "partially" implemented.
  */
 fun createCollection(first: Int, cursor: String, type: String): PeopleCollection {
   val people = if (type == "Royalties") { ROYALTIES } else { HEROES }
@@ -27,7 +28,7 @@ fun createCollection(first: Int, cursor: String, type: String): PeopleCollection
 class QueryResolvers() : GraphQLQueryResolver {
 
   fun sample(): Sample {
-    return Sample(id = UUID.randomUUID().toString(), name = "sample name")
+    return Sample(name = "sample name")
   }
 
   fun allPeople(first: Int, cursor: String, type: String): PeopleCollection {

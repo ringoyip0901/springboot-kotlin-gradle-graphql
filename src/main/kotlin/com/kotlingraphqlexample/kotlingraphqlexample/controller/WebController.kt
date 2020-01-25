@@ -13,7 +13,7 @@ class WebController {
   lateinit var sampleRepo: SampleRepo;
   @GetMapping("/save")
   fun saveAction(): MutableList<Sample> {
-    sampleRepo.saveAndFlush(Sample("sample"))
+    sampleRepo.save(Sample("sample"))
     val all = sampleRepo.findAll();
     return all;
   }

@@ -33,7 +33,7 @@ const GetFamily: React.FC = () => {
     variables: {
       first: 4,
       cursor: "random",
-      type: TYPE.ROYALTIES
+      type: TYPE.HEROES
     }
   })
   console.log(data)

@@ -1,9 +1,10 @@
 package com.kotlingraphqlexample.kotlingraphqlexample
 
+import graphql.schema.idl.SchemaDirectiveWiring
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import org.springframework.context.annotation.Bean
 import org.springframework.boot.web.servlet.FilterRegistrationBean
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.Ordered
 import org.springframework.transaction.annotation.EnableTransactionManagement
@@ -12,6 +13,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
 import java.util.*
 import javax.servlet.Filter
+
 
 @SpringBootApplication
 @Configuration
