@@ -4,10 +4,10 @@ import com.coxautodev.graphql.tools.GraphQLQueryResolver
 import com.coxautodev.graphql.tools.SchemaParserDictionary
 import com.kotlingraphqlexample.kotlingraphqlexample.data.*
 import com.kotlingraphqlexample.kotlingraphqlexample.model.*
-import org.apache.commons.lang3.mutable.Mutable
 //import com.kotlingraphqlexample.kotlingraphqlexample.repositories.RoyaltyRepo
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
+import java.util.*
 
 /**
  * @description cursor pagination has not been implemmented yet.
@@ -30,7 +30,7 @@ class QueryResolvers() : GraphQLQueryResolver {
   }
 
   fun sample(): Sample {
-    return Sample(name = "sample name")
+    return Sample(id = UUID.randomUUID().toString(), name = "sample name")
   }
 
   fun allPeople(first: Int, cursor: String, type: String): PeopleCollection {
