@@ -4,8 +4,7 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import client from './apollo-envir'
 import "./App.css";
 import GetFamily from "./GetFamily";
-
-//reset it
+import CreateNewMember from './CreateNewMember'
 
 const App: React.FC = (): any => {
   return (
@@ -13,6 +12,7 @@ const App: React.FC = (): any => {
       <div className="App">
         <header className="App-header">
           <GetFamily />
+          <CreateNewMember />
         </header>
       </div>
     </ApolloProvider>

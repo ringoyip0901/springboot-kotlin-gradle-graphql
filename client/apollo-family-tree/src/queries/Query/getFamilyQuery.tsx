@@ -7,7 +7,9 @@ enum TYPE {
 
 const Royalty_Detail = gql`
     fragment RoyaltyDetail on Royalty {
-        title
+        id
+        name
+        image
     }
 `
 
@@ -32,13 +34,24 @@ const GET_FAMILY_QUERY = gql`
    allPeople(first: $first, cursor: $cursor, type: $type) {
       edges {
         node {
-          ...Basic_Info
-          ...Hero_Detail
+          id
+          name
+          image
         }
       }
    }
  }
- ${Hero_Detail}
- ${Basic_Info}
 `
-export { GET_FAMILY_QUERY }
+
+const GET_ALL_HEROES = gql`
+    query {
+        heroes {
+            members {
+                id
+                name
+                image
+            }
+        }
+    }
+`
+export { GET_FAMILY_QUERY, GET_ALL_HEROES }

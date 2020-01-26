@@ -5,6 +5,7 @@ directive @deprecated(
 type Query {
     allPeople(first: Int, cursor: String, type: String): PeopleCollection
     sample: Sample
+    heroes: Heros
 } 
 
 type PeopleCollection {
@@ -42,6 +43,10 @@ type Hero implements Person {
 type Sample implements SampleInterface {
     id: ID!
     name: String
+}
+
+type Heros {
+    members: [Hero]
 }
 
 

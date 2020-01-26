@@ -33,7 +33,7 @@ class MutationResolvers: GraphQLMutationResolver {
       streamOfSubscriptions.onNext("")
       return MutationPayload(result = newEdge, error = "No Error")
     }
-    streamOfSubscriptions.onNext("")
+//    streamOfSubscriptions.onNext("")
     return MutationPayload(result = Edge(cursor = generateUniqueId(), node = null), error = "Missing fields")
   }
 }

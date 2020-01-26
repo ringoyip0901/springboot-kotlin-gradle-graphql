@@ -4,6 +4,7 @@ import com.coxautodev.graphql.tools.GraphQLQueryResolver
 import com.coxautodev.graphql.tools.SchemaParserDictionary
 import com.kotlingraphqlexample.kotlingraphqlexample.data.*
 import com.kotlingraphqlexample.kotlingraphqlexample.model.*
+import org.apache.commons.lang3.mutable.Mutable
 //import com.kotlingraphqlexample.kotlingraphqlexample.repositories.RoyaltyRepo
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
@@ -23,6 +24,10 @@ fun createCollection(first: Int, cursor: String, type: String): PeopleCollection
 
 @Component
 class QueryResolvers() : GraphQLQueryResolver {
+
+  fun heroes(): Heroes {
+    return Heroes(members = HEROES)
+  }
 
   fun sample(): Sample {
     return Sample(name = "sample name")

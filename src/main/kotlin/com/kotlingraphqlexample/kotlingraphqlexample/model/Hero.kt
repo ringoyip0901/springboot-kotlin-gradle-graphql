@@ -13,3 +13,6 @@ data class Hero(
 ): Person {
     private constructor(): this("", "", "", "")
 }
+
+
+data class Heroes(val members: MutableList<Hero>)
